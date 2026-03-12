@@ -73,28 +73,29 @@
   .section-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.8rem;letter-spacing:5px;text-transform:uppercase;color:var(--orange);margin-bottom:12px;}
   .section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,6vw,4.5rem);letter-spacing:2px;line-height:1;margin-bottom:8px;}
   .section-line{width:60px;height:3px;background:linear-gradient(var(--orange),var(--gold));margin-bottom:50px;border-radius:2px;}
-  .matches-section-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.75rem;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin:0 0 16px;padding-left:12px;border-left:3px solid var(--muted);}
-  .matches-group{margin-bottom:40px;}
-  .matches-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
-  @media(max-width:768px){.matches-grid{grid-template-columns:1fr;}}
-  .match-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;position:relative;overflow:hidden;transition:transform 0.3s,box-shadow 0.3s;}
+  .matches-section-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.75rem;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin:0 0 12px;padding-left:12px;border-left:3px solid var(--muted);}
+  .matches-group{margin-bottom:28px;}
+  .matches-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  @media(max-width:1024px){.matches-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:600px){.matches-grid{grid-template-columns:1fr 1fr;gap:10px;}}
+  .match-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 14px 14px;position:relative;overflow:hidden;transition:transform 0.3s,box-shadow 0.3s;}
   .match-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,94,14,0.06),transparent);pointer-events:none;}
-  .match-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(255,94,14,0.2);}
+  .match-card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(255,94,14,0.2);}
   .match-card.cancelled{opacity:0.5;pointer-events:none;}
   .match-card.completed{border-color:rgba(0,230,118,0.3);}
-  .match-time{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:3px;color:var(--gold);margin-bottom:24px;display:flex;align-items:center;gap:10px;}
+  .match-time{font-family:'Bebas Neue',sans-serif;font-size:0.85rem;letter-spacing:2px;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
   .match-time::before{content:'';flex:1;height:1px;background:var(--border);}
   .match-time::after{content:'';flex:1;height:1px;background:var(--border);}
-  .match-teams{display:flex;align-items:center;justify-content:space-between;gap:16px;}
-  .match-team{display:flex;flex-direction:column;align-items:center;gap:12px;flex:1;}
-  .match-team-logo{width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid var(--border);transition:border-color 0.3s;}
+  .match-teams{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+  .match-team{display:flex;flex-direction:column;align-items:center;gap:7px;flex:1;}
+  .match-team-logo{width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid var(--border);transition:border-color 0.3s;}
   .match-card:hover .match-team-logo{border-color:var(--orange);}
-  .match-team-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:1px;text-align:center;}
-  .match-score{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:2px;color:var(--text);text-align:center;}
+  .match-team-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.85rem;letter-spacing:0.5px;text-align:center;line-height:1.2;}
+  .match-score{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:2px;color:var(--text);text-align:center;}
   .match-score.winner{color:var(--green);}
   .match-score.loser{color:var(--red);}
-  .match-vs{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--orange);text-shadow:0 0 30px rgba(255,94,14,0.5);}
-  .match-date-badge{position:absolute;top:16px;right:16px;background:var(--orange);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.75rem;letter-spacing:2px;padding:4px 12px;border-radius:4px;text-transform:uppercase;}
+  .match-vs{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--orange);text-shadow:0 0 20px rgba(255,94,14,0.5);}
+  .match-date-badge{position:absolute;top:10px;right:10px;background:var(--orange);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.65rem;letter-spacing:1.5px;padding:3px 8px;border-radius:4px;text-transform:uppercase;}
   .match-date-badge.cancelled-badge{background:#444;}
   .match-date-badge.completed-badge{background:var(--green);color:#000;}
   .match-date-badge.upcoming-badge{background:var(--blue);}
@@ -174,7 +175,7 @@
     section{padding:60px 16px;}#hero{padding:80px 16px 60px;}
     .hero-ball{font-size:3.5rem;}.hero-title{font-size:clamp(3.2rem,16vw,5rem);}.hero-sub{font-size:0.95rem;margin:14px auto 24px;}.hero-date{font-size:1.3rem;}.hero-cta{gap:10px;}.btn{padding:12px 24px;font-size:0.9rem;}.scroll-hint{display:none;}
     .section-title{font-size:clamp(2rem,10vw,3rem);}
-    .matches-grid{grid-template-columns:1fr;gap:16px;}.match-card{padding:20px 16px;}.match-team-logo{width:64px;height:64px;}.match-team-name{font-size:0.95rem;}.match-vs{font-size:2rem;}
+    .match-team-logo{width:44px;height:44px;}.match-team-name{font-size:0.78rem;}.match-vs{font-size:1.3rem;}.match-score{font-size:1.1rem;}.match-time{font-size:0.75rem;}.match-card{padding:12px 10px 10px;}.match-date-badge{font-size:0.55rem;padding:2px 6px;top:7px;right:7px;}
     .teams-grid{grid-template-columns:1fr 1fr;gap:12px;}.team-card{padding:20px 14px;}.team-logo{width:64px;height:64px;margin-bottom:12px;}.team-code{font-size:1.8rem;}.team-name{font-size:1rem;}.team-captain{font-size:0.75rem;}.team-player-count{font-size:0.8rem;margin-top:10px;padding-top:10px;}
     .modal{border-radius:16px 16px 0 0;margin-top:auto;max-height:92vh;}.modal-overlay{align-items:flex-end;padding:0;}.modal-header{padding:18px 16px 14px;gap:14px;}.modal-logo{width:52px;height:52px;}.modal-title{font-size:1.8rem;}.modal-close{top:14px;right:14px;width:32px;height:32px;font-size:1rem;}.modal-players{grid-template-columns:repeat(3,1fr);gap:10px;padding:16px;}.player-name{font-size:0.8rem;}
     .table-wrap{border-radius:12px;overflow-x:auto;}table{min-width:420px;}thead th{padding:12px 10px;font-size:0.75rem;letter-spacing:1.5px;}tbody td{padding:12px 10px;font-size:0.9rem;}.team-row-logo{width:24px;height:24px;margin-right:6px;}.pos-badge{width:26px;height:26px;font-size:0.8rem;}
@@ -378,13 +379,54 @@
     </div>
   </div>
 
-  <!-- 12 MARCH - TODAY -->
+  <!-- 12 MARCH - COMPLETED -->
   <div class="matches-group reveal">
     <div class="matches-section-label">📅 12 March 2026 — Match Day 4</div>
     <div class="matches-grid">
-      <div class="match-card">
-        <div class="match-date-badge upcoming-badge">🔜 Today</div>
+      <div class="match-card completed">
+        <div class="match-date-badge completed-badge">✓ Final Score</div>
         <div class="match-time">5:30 PM · 12 MARCH</div>
+        <div class="match-teams">
+          <div class="match-team">
+            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-08_at_14.51.23_anwvww.jpg" alt="Wolves" class="match-team-logo">
+            <div class="match-team-name">Wolves</div>
+            <div class="match-score loser">52</div>
+          </div>
+          <div class="match-vs">VS</div>
+          <div class="match-team">
+            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014681/WhatsApp_Image_2026-02-01_at_15.50.04_1_m1ta5o.jpg" alt="No Mercy" class="match-team-logo">
+            <div class="match-team-name">No Mercy</div>
+            <div class="match-score winner">60</div>
+          </div>
+        </div>
+      </div>
+      <div class="match-card completed">
+        <div class="match-date-badge completed-badge">✓ Final Score</div>
+        <div class="match-time">6:30 PM · 12 MARCH</div>
+        <div class="match-teams">
+          <div class="match-team">
+            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-02-01_at_15.50.35_1_ekwftu.jpg" alt="Apex Howlers" class="match-team-logo">
+            <div class="match-team-name">Apex Howlers</div>
+            <div class="match-score loser">36</div>
+          </div>
+          <div class="match-vs">VS</div>
+          <div class="match-team">
+            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-07_at_23.31.22_ieh5db.jpg" alt="Raptor Force" class="match-team-logo">
+            <div class="match-team-name">Raptor Force</div>
+            <div class="match-score winner">45</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 13 MARCH - UPCOMING -->
+  <div class="matches-group reveal">
+    <div class="matches-section-label">📅 13 March 2026 — Match Day 5</div>
+    <div class="matches-grid">
+      <div class="match-card">
+        <div class="match-date-badge upcoming-badge">🔜 Tomorrow</div>
+        <div class="match-time">5:30 PM · 13 MARCH</div>
         <div class="match-teams">
           <div class="match-team">
             <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-08_at_14.51.23_anwvww.jpg" alt="Wolves" class="match-team-logo">
@@ -392,23 +434,31 @@
           </div>
           <div class="match-vs">VS</div>
           <div class="match-team">
-            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014681/WhatsApp_Image_2026-02-01_at_15.50.04_1_m1ta5o.jpg" alt="No Mercy" class="match-team-logo">
-            <div class="match-team-name">No Mercy</div>
+            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-02-01_at_15.50.35_1_ekwftu.jpg" alt="Apex Howlers" class="match-team-logo">
+            <div class="match-team-name">Apex Howlers</div>
           </div>
         </div>
       </div>
-      <div class="match-card">
-        <div class="match-date-badge upcoming-badge">🔜 Today</div>
-        <div class="match-time">6:30 PM · 12 MARCH</div>
+    </div>
+  </div>
+
+  <!-- 14 MARCH - FINAL -->
+  <div class="matches-group reveal">
+    <div class="matches-section-label">🏆 14 March 2026 — GRAND FINAL</div>
+    <div class="matches-grid">
+      <div class="match-card" style="border-color:rgba(255,184,0,0.5);background:linear-gradient(135deg,rgba(255,184,0,0.06),rgba(255,94,14,0.06));">
+        <div class="match-date-badge" style="background:linear-gradient(135deg,var(--orange),var(--gold));color:#000;">🏆 FINAL</div>
+        <div class="match-time">5:00 PM · 14 MARCH</div>
+        <div style="text-align:center;margin-bottom:12px;font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:2px;color:var(--gold);text-transform:uppercase;">4 Quarters × 10 Minutes</div>
         <div class="match-teams">
           <div class="match-team">
-            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-07_at_23.31.22_ieh5db.jpg" alt="Raptor Force" class="match-team-logo">
-            <div class="match-team-name">Raptor Force</div>
+            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014681/WhatsApp_Image_2026-02-01_at_15.50.04_1_m1ta5o.jpg" alt="No Mercy" class="match-team-logo">
+            <div class="match-team-name">No Mercy</div>
           </div>
           <div class="match-vs">VS</div>
           <div class="match-team">
-            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-02-01_at_15.50.35_1_ekwftu.jpg" alt="Apex Howlers" class="match-team-logo">
-            <div class="match-team-name">Apex Howlers</div>
+            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-07_at_23.31.22_ieh5db.jpg" alt="Raptor Force" class="match-team-logo">
+            <div class="match-team-name">Raptor Force</div>
           </div>
         </div>
       </div>
@@ -463,7 +513,7 @@
   <div class="stats-grid reveal">
     <div class="stat-card"><div class="stat-icon">🏀</div><div class="stat-val">4</div><div class="stat-label">Teams</div></div>
     <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-val" id="total-players">0</div><div class="stat-label">Players</div></div>
-    <div class="stat-card"><div class="stat-icon">🏆</div><div class="stat-val">5</div><div class="stat-label">Games Played</div></div>
+    <div class="stat-card"><div class="stat-icon">🏆</div><div class="stat-val">6</div><div class="stat-label">Games Played</div></div>
     <div class="stat-card"><div class="stat-icon">⭐</div><div class="stat-val">S2</div><div class="stat-label">Season</div></div>
   </div>
   <div class="tabs reveal">
@@ -517,36 +567,36 @@
 
 <script>
 const playerStats = {
-  "Ritesh Chauhan":          {pts:24,  three:1, ft:3, fouls:5},
-  "Shailesh Singh":          {pts:38,  three:1, ft:1, fouls:4},
-  "Himadri Shekhar Paul":    {pts:6,   three:0, ft:0, fouls:0},
-  "Sahil Gupta":             {pts:2,   three:0, ft:0, fouls:2},
-  "Ashirbad Mishra":         {pts:18,  three:0, ft:0, fouls:3},
-  "Aaditya Thakur":          {pts:37,  three:0, ft:1, fouls:3},
+  "Ritesh Chauhan":          {pts:36,  three:2, ft:4, fouls:7},
+  "Shailesh Singh":          {pts:51,  three:3, ft:2, fouls:9},
+  "Himadri Shekhar Paul":    {pts:12,   three:0, ft:0, fouls:2},
+  "Sahil Gupta":             {pts:4,   three:0, ft:0, fouls:2},
+  "Ashirbad Mishra":         {pts:29,  three:0, ft:0, fouls:7},
+  "Aaditya Thakur":          {pts:46,  three:0, ft:2, fouls:5},
   "Avinash Khatri":          {pts:0,   three:0, ft:0, fouls:1},
-  "Swastik Subhadarshi Jena":{pts:0,   three:0, ft:0, fouls:1},
-  "Soumitra Bhattarjee":     {pts:31,  three:1, ft:3, fouls:3},
-  "Harsh Mishra":            {pts:33,  three:0, ft:9, fouls:2},
-  "Harshit Shah":            {pts:0,   three:0, ft:0, fouls:0},
+  "Swastik Subhadarshi Jena":{pts:0,   three:0, ft:0, fouls:2},
+  "Soumitra Bhattarjee":     {pts:48,  three:1, ft:6, fouls:6},
+  "Harsh Mishra":            {pts:68,  three:0, ft:16, fouls:4},
+  "Harshit Shah":            {pts:0,   three:0, ft:0, fouls:3},
   "Akash Mukharjee":         {pts:0,   three:0, ft:0, fouls:0},
-  "Aryan Singh":             {pts:6,   three:0, ft:0, fouls:1},
+  "Aryan Singh":             {pts:14,   three:2, ft:0, fouls:4},
   "Anik Ghosh":              {pts:0,   three:0, ft:0, fouls:0},
-  "Debadatta Mohanty":       {pts:0,   three:0, ft:0, fouls:2},
-  "Raghav Sah":              {pts:9,   three:3, ft:0, fouls:1},
+  "Debadatta Mohanty":       {pts:0,   three:0, ft:0, fouls:3},
+  "Raghav Sah":              {pts:9,   three:3, ft:0, fouls:7},
   "Sambridda Ranabhat":      {pts:0,   three:0, ft:0, fouls:0},
-  "Shishir Yadav":           {pts:13,  three:0, ft:1, fouls:2},
-  "Suhit Ranjan Majumder":   {pts:0,   three:0, ft:0, fouls:5},
-  "Yuvaraj Sharma":          {pts:0,   three:0, ft:0, fouls:2},
-  "Raunak Chowdhury":        {pts:16,  three:1, ft:1, fouls:1},
-  "Ankan Giri":              {pts:25,  three:0, ft:1, fouls:1},
-  "Peeyush Shah":            {pts:17,  three:0, ft:1, fouls:3},
+  "Shishir Yadav":           {pts:19,  three:0, ft:1, fouls:2},
+  "Suhit Ranjan Majumder":   {pts:0,   three:0, ft:0, fouls:6},
+  "Yuvaraj Sharma":          {pts:0,   three:0, ft:0, fouls:5},
+  "Raunak Chowdhury":        {pts:28,  three:1, ft:1, fouls:1},
+  "Ankan Giri":              {pts:43,  three:0, ft:1, fouls:2},
+  "Peeyush Shah":            {pts:17,  three:0, ft:1, fouls:5},
   "Yubraj Shah":             {pts:0,   three:0, ft:0, fouls:6},
   "Ankit Bhandari":          {pts:2,   three:0, ft:0, fouls:6},
   "Prince Shah":             {pts:0,   three:0, ft:0, fouls:0},
-  "Praagya Parajuli":        {pts:2,   three:0, ft:0, fouls:0},
-  "Mohin Gupta":             {pts:27,  three:0, ft:3, fouls:8},
-  "Samrat Lamsal":           {pts:16,  three:0, ft:0, fouls:6},
-  "Bipul Shahi":             {pts:65,  three:0, ft:1, fouls:2}
+  "Praagya Parajuli":        {pts:2,   three:0, ft:0, fouls:1},
+  "Mohin Gupta":             {pts:42,  three:0, ft:4, fouls:11},
+  "Samrat Lamsal":           {pts:20,  three:0, ft:0, fouls:7},
+  "Bipul Shahi":             {pts:91,  three:1, ft:2, fouls:2}
 };
 
 const teams = [
@@ -611,10 +661,10 @@ const teams = [
 ];
 
 const pointsData = [
-  {logo:teams[0].logo, name:"No Mercy",     code:"NM", mp:3, w:2, l:1, pd:+21, pts:4},
-  {logo:teams[2].logo, name:"Apex Howlers", code:"AH", mp:2, w:1, l:1, pd:-12, pts:2},
-  {logo:teams[3].logo, name:"Raptor Force", code:"RF", mp:3, w:2, l:1, pd:+23, pts:4},
-  {logo:teams[1].logo, name:"Wolves",       code:"WL", mp:2, w:0, l:2, pd:-24, pts:0},
+  {logo:teams[0].logo, name:"No Mercy",     code:"NM", mp:4, w:3, l:1, pd:+29, pts:6, qualified:true},
+  {logo:teams[3].logo, name:"Raptor Force", code:"RF", mp:4, w:3, l:1, pd:+32, pts:6, qualified:true},
+  {logo:teams[2].logo, name:"Apex Howlers", code:"AH", mp:3, w:1, l:2, pd:-21, pts:2, eliminated:true},
+  {logo:teams[1].logo, name:"Wolves",       code:"WL", mp:3, w:0, l:3, pd:-40, pts:0, eliminated:true},
 ];
 
 const nameToTeam = {};
@@ -675,7 +725,7 @@ sortedPoints.forEach((r, idx) => {
   const pos = idx + 1;
   const badgeClass = pos===1?'pos-1':pos===2?'pos-2':pos===3?'pos-3':'pos-other';
   const pdStr = r.pd===0 ? '0' : r.pd>0 ? `<span class="pd-pos">+${r.pd}</span>` : `<span class="pd-neg">${r.pd}</span>`;
-  ptsTbody.innerHTML += `<tr><td><span class="pos-badge ${badgeClass}">${pos}</span></td><td><img src="${r.logo}" class="team-row-logo" onerror="this.src='https://via.placeholder.com/30'"><strong>${r.name}</strong></td><td>${r.mp}</td><td>${r.w}</td><td>${r.l}</td><td>${pdStr}</td><td class="pts-val">${r.pts}</td></tr>`;
+  ptsTbody.innerHTML += `<tr style="${r.qualified?'background:rgba(0,230,118,0.04);':r.eliminated?'opacity:0.65;':''}"><td><span class="pos-badge ${badgeClass}">${pos}</span></td><td><img src="${r.logo}" class="team-row-logo" onerror="this.src='https://via.placeholder.com/30'"><strong>${r.name}</strong>${r.qualified?'<span style="margin-left:8px;font-size:0.65rem;background:rgba(0,230,118,0.15);color:var(--green);border:1px solid rgba(0,230,118,0.4);padding:2px 8px;border-radius:4px;letter-spacing:1px;font-family:Barlow Condensed,sans-serif;font-weight:700;">✓ QUALIFIED</span>':r.eliminated?'<span style="margin-left:8px;font-size:0.65rem;background:rgba(255,61,87,0.12);color:var(--red);border:1px solid rgba(255,61,87,0.35);padding:2px 8px;border-radius:4px;letter-spacing:1px;font-family:Barlow Condensed,sans-serif;font-weight:700;">✕ ELIMINATED</span>':''}</td><td>${r.mp}</td><td>${r.w}</td><td>${r.l}</td><td>${pdStr}</td><td class="pts-val">${r.pts}</td></tr>`;
 });
 
 function buildStatTable(tbodyId, statKey) {
