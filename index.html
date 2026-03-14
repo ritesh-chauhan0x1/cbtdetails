@@ -6,20 +6,7 @@
 <title>CBT Season 2 — Campus Basketball Tournament</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --orange: #FF5E0E;
-    --gold: #FFB800;
-    --dark: #080C14;
-    --darker: #050810;
-    --mid: #101828;
-    --surface: #141C2A;
-    --border: rgba(255,94,14,0.2);
-    --text: #E8EDF5;
-    --muted: #6B7A8F;
-    --green: #00E676;
-    --red: #FF3D57;
-    --blue: #2979FF;
-  }
+  :root{--orange:#FF5E0E;--gold:#FFB800;--dark:#080C14;--darker:#050810;--mid:#101828;--surface:#141C2A;--border:rgba(255,94,14,0.2);--text:#E8EDF5;--muted:#6B7A8F;--green:#00E676;--red:#FF3D57;--blue:#2979FF;}
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{background:var(--darker);color:var(--text);font-family:'Barlow',sans-serif;overflow-x:hidden;}
@@ -28,6 +15,11 @@
   .bg-orb1{width:600px;height:600px;background:rgba(255,94,14,0.07);top:-200px;right:-200px;}
   .bg-orb2{width:500px;height:500px;background:rgba(255,184,0,0.05);bottom:-150px;left:-150px;animation-delay:-4s;}
   @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}
+  /* FIREWORKS */
+  #fw-canvas{position:fixed;inset:0;z-index:9;pointer-events:none;}
+  /* CONFETTI */
+  .cf{position:fixed;pointer-events:none;z-index:8;animation:cfFall linear infinite;border-radius:2px;}
+  @keyframes cfFall{0%{transform:translateY(-30px) rotate(0deg);opacity:1;}100%{transform:translateY(110vh) rotate(900deg);opacity:0;}}
   nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:64px;background:rgba(8,12,20,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
   .nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:3px;background:linear-gradient(135deg,var(--orange),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;flex-shrink:0;}
   .nav-links{display:flex;gap:1.6rem;list-style:none;align-items:center;}
@@ -35,122 +27,123 @@
   .nav-links a:hover,.nav-links a.active{color:var(--orange);border-color:var(--orange);}
   .nav-ig{display:flex;align-items:center;gap:7px;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);padding:7px 16px;border-radius:30px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.82rem;letter-spacing:1px;color:#fff;text-decoration:none;flex-shrink:0;transition:opacity 0.3s,transform 0.3s;}
   .nav-ig:hover{opacity:0.85;transform:scale(1.04);}
-  .nav-menu-btn{display:none;flex-direction:column;justify-content:center;align-items:center;width:40px;height:40px;gap:5px;cursor:pointer;background:var(--surface);border:1px solid var(--border);border-radius:10px;flex-shrink:0;transition:border-color 0.3s;}
-  .nav-menu-btn:hover{border-color:var(--orange);}
-  .nav-menu-btn span{width:5px;height:5px;border-radius:50%;background:var(--text);transition:background 0.3s;}
-  .nav-menu-btn:hover span{background:var(--orange);}
+  .nav-menu-btn{display:none;flex-direction:column;justify-content:center;align-items:center;width:40px;height:40px;gap:5px;cursor:pointer;background:var(--surface);border:1px solid var(--border);border-radius:10px;flex-shrink:0;}
+  .nav-menu-btn span{width:5px;height:5px;border-radius:50%;background:var(--text);}
   .drawer-overlay{position:fixed;inset:0;z-index:150;background:rgba(5,8,16,0.7);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity 0.35s;}
   .drawer-overlay.open{opacity:1;pointer-events:all;}
-  .drawer{position:fixed;top:0;right:0;bottom:0;z-index:160;width:min(300px,85vw);background:var(--dark);border-left:1px solid var(--border);transform:translateX(100%);transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);display:flex;flex-direction:column;padding:0;overflow:hidden;}
+  .drawer{position:fixed;top:0;right:0;bottom:0;z-index:160;width:min(300px,85vw);background:var(--dark);border-left:1px solid var(--border);transform:translateX(100%);transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);display:flex;flex-direction:column;overflow:hidden;}
   .drawer.open{transform:translateX(0);}
   .drawer-head{display:flex;align-items:center;justify-content:space-between;padding:20px 20px 16px;border-bottom:1px solid var(--border);}
   .drawer-logo{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:3px;background:linear-gradient(135deg,var(--orange),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-  .drawer-close{width:34px;height:34px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;color:var(--text);transition:all 0.25s;}
-  .drawer-close:hover{background:var(--orange);border-color:var(--orange);}
+  .drawer-close{width:34px;height:34px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;color:var(--text);}
+  .drawer-close:hover{background:var(--orange);}
   .drawer-nav{list-style:none;padding:12px 0;flex:1;}
   .drawer-nav li a{display:flex;align-items:center;gap:14px;padding:15px 24px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-decoration:none;border-left:3px solid transparent;transition:all 0.25s;}
   .drawer-nav li a:hover{color:var(--orange);background:rgba(255,94,14,0.06);border-color:var(--orange);}
   .drawer-nav li a .dnav-icon{font-size:1.2rem;width:24px;text-align:center;}
   .drawer-ig{margin:16px;display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);padding:14px;border-radius:12px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:1px;color:#fff;text-decoration:none;}
-  #hero{position:relative;z-index:1;min-height:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 5% 20px;overflow:hidden;}
-  .hero-season{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.85rem;letter-spacing:5px;text-transform:uppercase;color:var(--orange);border:1px solid var(--orange);padding:6px 20px;border-radius:30px;display:inline-block;margin-bottom:24px;animation:fadeUp 0.8s ease both;}
-  .hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,12vw,9rem);line-height:0.9;letter-spacing:4px;animation:fadeUp 0.8s 0.15s ease both;}
+  /* HERO */
+  #hero{position:relative;z-index:10;min-height:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 5% 20px;overflow:hidden;}
+  .hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,12vw,9rem);line-height:0.9;letter-spacing:4px;animation:fadeUp 0.8s 0.15s ease both;margin-bottom:0;}
   .hero-title span{background:linear-gradient(135deg,var(--orange),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-  .hero-sub{font-size:clamp(1rem,2.5vw,1.4rem);font-weight:300;color:var(--muted);max-width:600px;margin:20px auto 40px;animation:fadeUp 0.8s 0.3s ease both;}
-  .hero-date{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.4rem,4vw,2.2rem);letter-spacing:3px;color:var(--gold);animation:fadeUp 0.8s 0.45s ease both;}
-  .hero-ball{font-size:5rem;animation:bounce 2s ease-in-out infinite, fadeUp 0.8s 0.6s ease both;display:inline-block;margin-bottom:10px;}
-  @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
-  .hero-cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:36px;animation:fadeUp 0.8s 0.6s ease both;}
-  .btn{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:2px;text-transform:uppercase;padding:14px 36px;border-radius:4px;cursor:pointer;text-decoration:none;border:none;transition:all 0.3s;}
-  .btn-primary{background:linear-gradient(135deg,var(--orange),#FF8C42);color:#fff;}
-  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(255,94,14,0.4);}
-  .btn-outline{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.2);}
-  .btn-outline:hover{border-color:var(--orange);color:var(--orange);}
-  .scroll-hint{position:absolute;bottom:30px;display:flex;flex-direction:column;align-items:center;gap:8px;font-size:0.75rem;letter-spacing:2px;color:var(--muted);text-transform:uppercase;animation:fadeUp 1s 1s ease both;}
-  .scroll-line{width:1px;height:50px;background:linear-gradient(var(--orange),transparent);animation:grow 2s ease-in-out infinite;}
-  @keyframes grow{0%,100%{height:30px;opacity:0.5;}50%{height:60px;opacity:1;}}
-
-  /* FINAL INVITE BANNER */
-  .final-invite{margin-top:48px;width:100%;max-width:720px;animation:fadeUp 0.8s 0.8s ease both;}
-  .final-invite-inner{border:2px solid rgba(255,184,0,0.5);border-radius:20px;padding:32px 28px;position:relative;overflow:hidden;background:rgba(20,28,42,0.85);}
-  .final-invite-inner::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,184,0,0.07),rgba(255,94,14,0.07),transparent);pointer-events:none;}
-  .invite-pulse-ring{position:absolute;top:-30px;right:-30px;width:160px;height:160px;border-radius:50%;border:1px solid rgba(255,184,0,0.2);animation:ringPulse 2.5s ease-in-out infinite;}
-  .invite-pulse-ring2{position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;border:1px solid rgba(255,94,14,0.12);animation:ringPulse 2.5s 0.8s ease-in-out infinite;}
-  @keyframes ringPulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.12);opacity:0.4;}}
-  .invite-tag{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.72rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);border:1px solid rgba(255,184,0,0.4);padding:4px 14px;border-radius:20px;margin-bottom:16px;animation:shimmer 3s ease-in-out infinite;}
-  @keyframes shimmer{0%,100%{opacity:1;}50%{opacity:0.6;}}
-  .invite-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,7vw,3.6rem);letter-spacing:3px;line-height:1;margin-bottom:10px;background:linear-gradient(135deg,var(--gold),var(--orange),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-size:200% auto;animation:gradientShift 3s linear infinite;}
-  @keyframes gradientShift{0%{background-position:0% center;}100%{background-position:200% center;}}
-  .invite-matchup{display:flex;align-items:center;justify-content:center;gap:20px;margin:18px 0;flex-wrap:wrap;}
-  .invite-team{display:flex;flex-direction:column;align-items:center;gap:6px;}
-  .invite-team-logo{width:64px;height:64px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,184,0,0.5);animation:logoPulse 2s ease-in-out infinite;}
-  .invite-team-logo.alt{animation-delay:-1s;}
-  @keyframes logoPulse{0%,100%{border-color:rgba(255,184,0,0.5);}50%{border-color:rgba(255,94,14,0.9);}}
-  .invite-team-name{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:2px;}
-  .invite-captain{font-size:0.75rem;color:var(--muted);letter-spacing:1px;}
-  .invite-vs{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--orange);animation:vsPulse 1.5s ease-in-out infinite;}
-  @keyframes vsPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}
-  .invite-details{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:16px 0 20px;}
-  .invite-detail-chip{display:flex;align-items:center;gap:6px;background:rgba(255,94,14,0.12);border:1px solid rgba(255,94,14,0.25);border-radius:30px;padding:7px 16px;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:0.85rem;letter-spacing:1px;}
-  .invite-detail-chip span{font-size:1rem;}
-  .invite-format{font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:20px;}
-  .invite-cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
-  .invite-btn{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:3px;text-transform:uppercase;padding:12px 32px;border-radius:6px;cursor:pointer;text-decoration:none;border:none;transition:all 0.3s;}
-  .invite-btn-gold{background:linear-gradient(135deg,var(--gold),#FF8C00);color:#000;}
-  .invite-btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(255,184,0,0.4);}
-  .invite-btn-outline{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.2);}
-  .invite-btn-outline:hover{border-color:var(--orange);color:var(--orange);}
-  .ticker-wrap{overflow:hidden;margin-top:18px;border-top:1px solid rgba(255,184,0,0.2);padding-top:14px;}
-  .ticker{display:flex;gap:0;white-space:nowrap;animation:tickerMove 18s linear infinite;}
-  .ticker-item{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.78rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);padding:0 24px;}
-  .ticker-dot{color:var(--orange);padding:0;}
+  /* CHAMP BANNER */
+  .champ-banner{position:relative;z-index:10;width:100%;background:linear-gradient(135deg,rgba(255,184,0,0.12),rgba(255,94,14,0.12));border-top:2px solid rgba(255,184,0,0.5);border-bottom:2px solid rgba(255,184,0,0.5);padding:14px 5%;text-align:center;overflow:hidden;}
+  .champ-banner-text{font-family:'Bebas Neue',sans-serif;font-size:clamp(1rem,3.5vw,1.8rem);letter-spacing:4px;background:linear-gradient(135deg,var(--gold),var(--orange),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-size:200% auto;animation:gradientShift 2s linear infinite;white-space:nowrap;}
+  .champ-ticker-wrap{overflow:hidden;}
+  .champ-ticker{display:inline-flex;white-space:nowrap;animation:tickerMove 20s linear infinite;}
   @keyframes tickerMove{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-
-  section{position:relative;z-index:1;padding:100px 5%;}
+  /* INVITE BANNER */
+  .final-invite{margin-top:36px;width:100%;max-width:720px;animation:fadeUp 0.8s 0.5s ease both;position:relative;z-index:10;}
+  .final-invite-inner{border:2px solid rgba(0,230,118,0.5);border-radius:20px;padding:28px 24px;position:relative;overflow:hidden;background:rgba(20,28,42,0.9);}
+  .final-invite-inner::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,230,118,0.06),rgba(255,184,0,0.06),transparent);pointer-events:none;}
+  .invite-pulse-ring{position:absolute;top:-30px;right:-30px;width:160px;height:160px;border-radius:50%;border:1px solid rgba(0,230,118,0.2);animation:ringPulse 2.5s ease-in-out infinite;}
+  .invite-pulse-ring2{position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;border:1px solid rgba(255,184,0,0.12);animation:ringPulse 2.5s 0.8s ease-in-out infinite;}
+  @keyframes ringPulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.12);opacity:0.4;}}
+  .invite-tag{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.72rem;letter-spacing:4px;text-transform:uppercase;color:var(--green);border:1px solid rgba(0,230,118,0.4);padding:4px 14px;border-radius:20px;margin-bottom:12px;animation:shimmer 3s ease-in-out infinite;}
+  @keyframes shimmer{0%,100%{opacity:1;}50%{opacity:0.6;}}
+  .invite-champ-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.4rem,8vw,4.2rem);letter-spacing:3px;line-height:1;margin-bottom:4px;color:var(--green);text-shadow:0 0 40px rgba(0,230,118,0.4);animation:champPop 1s ease both 0.3s;}
+  @keyframes champPop{0%{transform:scale(0.7);opacity:0;}60%{transform:scale(1.08);}100%{transform:scale(1);opacity:1;}}
+  .invite-champ-sub{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.2rem,4vw,1.8rem);letter-spacing:4px;color:var(--gold);margin-bottom:16px;animation:fadeUp 0.8s 0.6s ease both;}
+  .invite-score-row{display:flex;align-items:center;justify-content:center;gap:16px;margin:16px 0;flex-wrap:wrap;}
+  .invite-score-team{display:flex;flex-direction:column;align-items:center;gap:8px;}
+  .invite-score-logo{width:60px;height:60px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,184,0,0.5);animation:logoPulse 2s ease-in-out infinite;}
+  .invite-score-logo.champ{border-color:rgba(0,230,118,0.8);animation:champLogoPulse 1.5s ease-in-out infinite;}
+  @keyframes champLogoPulse{0%,100%{border-color:rgba(0,230,118,0.8);box-shadow:0 0 0 0 rgba(0,230,118,0);}50%{border-color:rgba(0,230,118,1);box-shadow:0 0 20px 4px rgba(0,230,118,0.3);}}
+  @keyframes logoPulse{0%,100%{border-color:rgba(255,184,0,0.5);}50%{border-color:rgba(255,94,14,0.9);}}
+  .invite-score-name{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;}
+  .invite-score-pts{font-family:'Bebas Neue',sans-serif;font-size:2.6rem;letter-spacing:2px;line-height:1;}
+  .invite-score-pts.w{color:var(--green);}
+  .invite-score-pts.l{color:var(--red);}
+  .invite-score-sep{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--muted);}
+  .invite-mott-strip{display:flex;align-items:center;gap:14px;background:rgba(255,184,0,0.1);border:1px solid rgba(255,184,0,0.3);border-radius:12px;padding:12px 18px;margin:16px 0;flex-wrap:wrap;justify-content:center;}
+  .invite-mott-photo{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);}
+  .invite-mott-text{text-align:left;}
+  .invite-mott-label{font-family:'Barlow Condensed',sans-serif;font-size:0.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);}
+  .invite-mott-name{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:2px;color:var(--text);}
+  .ticker-wrap{overflow:hidden;margin-top:16px;border-top:1px solid rgba(0,230,118,0.2);padding-top:12px;}
+  .ticker{display:flex;white-space:nowrap;animation:tickerMove 18s linear infinite;}
+  .ticker-item{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.78rem;letter-spacing:3px;text-transform:uppercase;color:var(--green);padding:0 24px;}
+  .ticker-dot{color:var(--gold);padding:0;}
+  section{position:relative;z-index:10;padding:100px 5%;}
   .section-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.8rem;letter-spacing:5px;text-transform:uppercase;color:var(--orange);margin-bottom:12px;}
   .section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,6vw,4.5rem);letter-spacing:2px;line-height:1;margin-bottom:8px;}
   .section-line{width:60px;height:3px;background:linear-gradient(var(--orange),var(--gold));margin-bottom:50px;border-radius:2px;}
+  /* MOTT SECTION */
+  .mott-section{position:relative;z-index:10;padding:60px 5%;text-align:center;}
+  .mott-card{max-width:460px;margin:0 auto;background:var(--surface);border:2px solid rgba(255,184,0,0.5);border-radius:24px;padding:40px 28px;position:relative;overflow:hidden;animation:mottGlow 3s ease-in-out infinite;}
+  @keyframes mottGlow{0%,100%{box-shadow:0 0 0 0 rgba(255,184,0,0);}50%{box-shadow:0 0 60px 8px rgba(255,184,0,0.18);}}
+  .mott-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,184,0,0.08),rgba(255,94,14,0.05),transparent);pointer-events:none;}
+  .mott-r1{position:absolute;top:-40px;left:-40px;width:180px;height:180px;border-radius:50%;border:1px solid rgba(255,184,0,0.12);animation:ringPulse 3s ease-in-out infinite;}
+  .mott-r2{position:absolute;bottom:-40px;right:-40px;width:200px;height:200px;border-radius:50%;border:1px solid rgba(255,94,14,0.1);animation:ringPulse 3s 1.2s ease-in-out infinite;}
+  .mott-trophy{font-size:3rem;display:block;margin-bottom:8px;animation:crownBounce 1.5s ease-in-out infinite;}
+  @keyframes crownBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+  .mott-badge{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.72rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);border:1px solid rgba(255,184,0,0.4);padding:4px 14px;border-radius:20px;margin-bottom:18px;animation:shimmer 2.5s ease-in-out infinite;}
+  .mott-photo{width:130px;height:130px;border-radius:50%;object-fit:cover;object-position:top;border:4px solid var(--gold);margin:0 auto 14px;display:block;animation:champLogoPulse 2s ease-in-out infinite;}
+  .mott-name{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;letter-spacing:3px;background:linear-gradient(135deg,var(--gold),var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+  .mott-team{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.88rem;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:18px;}
+  .mott-stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+  .mott-stat{background:rgba(255,184,0,0.1);border:1px solid rgba(255,184,0,0.28);border-radius:10px;padding:10px 16px;text-align:center;}
+  .mott-stat-val{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:2px;color:var(--gold);line-height:1;}
+  .mott-stat-lbl{font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
+  .mott-foot{margin-top:18px;font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
+  /* MATCHES */
   .matches-section-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.75rem;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin:0 0 12px;padding-left:12px;border-left:3px solid var(--muted);}
   .matches-group{margin-bottom:28px;}
   .matches-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
   @media(max-width:1024px){.matches-grid{grid-template-columns:repeat(2,1fr);}}
   @media(max-width:600px){.matches-grid{grid-template-columns:1fr 1fr;gap:10px;}}
-  /* FINAL special grid */
-  .matches-grid-final{display:grid;grid-template-columns:1fr;gap:0;}
+  .matches-grid-final{display:grid;grid-template-columns:1fr;}
   .match-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 14px 14px;position:relative;overflow:hidden;transition:transform 0.3s,box-shadow 0.3s;}
   .match-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,94,14,0.06),transparent);pointer-events:none;}
   .match-card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(255,94,14,0.2);}
   .match-card.cancelled{opacity:0.5;pointer-events:none;}
   .match-card.completed{border-color:rgba(0,230,118,0.3);}
-  /* FINAL card overrides */
-  .match-card-final{background:linear-gradient(135deg,rgba(255,184,0,0.08),rgba(255,94,14,0.08));padding:36px 28px;border-radius:20px;border-width:2px;animation:finalPulse 3s ease-in-out infinite;}
-  .match-card-final:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(255,184,0,0.25);}
-  @keyframes finalPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,184,0,0);}50%{box-shadow:0 0 40px 4px rgba(255,184,0,0.15);}}
-  .final-glow{position:absolute;top:50%;left:50%;width:300px;height:300px;background:rgba(255,184,0,0.04);border-radius:50%;transform:translate(-50%,-50%);animation:finalGlow 3s ease-in-out infinite;pointer-events:none;}
-  @keyframes finalGlow{0%,100%{transform:translate(-50%,-50%) scale(1);}50%{transform:translate(-50%,-50%) scale(1.3);}}
+  .match-card-final{background:linear-gradient(135deg,rgba(0,230,118,0.07),rgba(255,184,0,0.07));padding:32px 24px;border-radius:20px;border:2px solid rgba(0,230,118,0.5);animation:finalGlow 3s ease-in-out infinite;}
+  @keyframes finalGlow{0%,100%{box-shadow:0 0 0 0 rgba(0,230,118,0);}50%{box-shadow:0 0 40px 4px rgba(0,230,118,0.15);}}
+  .match-card-final:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(0,230,118,0.2);}
+  .final-glow{position:absolute;top:50%;left:50%;width:300px;height:300px;background:rgba(0,230,118,0.03);border-radius:50%;transform:translate(-50%,-50%);animation:finalGlow 3s ease-in-out infinite;pointer-events:none;}
   .final-venue{text-align:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.9rem;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:6px;}
   .final-format{text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:0.78rem;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:20px;}
   .final-teams{gap:20px;}
-  .final-logo{width:90px;height:90px;border:3px solid rgba(255,184,0,0.5);}
+  .final-logo{width:90px;height:90px;border:3px solid rgba(255,184,0,0.4);}
+  .final-logo-champ{border-color:rgba(0,230,118,0.9)!important;animation:champLogoPulse 1.5s ease-in-out infinite!important;}
   .final-team-name{font-size:1.3rem;letter-spacing:2px;}
   .final-captain{font-size:0.78rem;color:var(--gold);letter-spacing:1px;margin-top:-4px;}
   .final-vs{font-size:3rem;color:var(--gold);}
   .final-crown{font-size:1.8rem;text-align:center;animation:crownBounce 1.5s ease-in-out infinite;}
-  @keyframes crownBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
-  .final-footer-bar{margin-top:22px;padding:10px;background:linear-gradient(135deg,rgba(255,184,0,0.15),rgba(255,94,14,0.15));border-radius:8px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:4px;color:var(--gold);}
+  .final-footer-bar{margin-top:20px;padding:10px;background:linear-gradient(135deg,rgba(0,230,118,0.2),rgba(255,184,0,0.15));border-radius:8px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:3px;color:var(--green);}
   .match-time{font-family:'Bebas Neue',sans-serif;font-size:0.85rem;letter-spacing:2px;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
-  .match-time::before{content:'';flex:1;height:1px;background:var(--border);}
-  .match-time::after{content:'';flex:1;height:1px;background:var(--border);}
+  .match-time::before,.match-time::after{content:'';flex:1;height:1px;background:var(--border);}
   .match-teams{display:flex;align-items:center;justify-content:space-between;gap:8px;}
   .match-team{display:flex;flex-direction:column;align-items:center;gap:7px;flex:1;}
   .match-team-logo{width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid var(--border);transition:border-color 0.3s;}
   .match-card:hover .match-team-logo{border-color:var(--orange);}
   .match-team-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.85rem;letter-spacing:0.5px;text-align:center;line-height:1.2;}
-  .match-score{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:2px;color:var(--text);text-align:center;}
+  .match-score{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:2px;text-align:center;}
   .match-score.winner{color:var(--green);}
   .match-score.loser{color:var(--red);}
-  .match-vs{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--orange);text-shadow:0 0 20px rgba(255,94,14,0.5);}
-  .match-date-badge{position:absolute;top:10px;right:10px;background:var(--orange);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.65rem;letter-spacing:1.5px;padding:3px 8px;border-radius:4px;text-transform:uppercase;}
+  .match-vs{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--orange);}
+  .match-date-badge{position:absolute;top:10px;right:10px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.65rem;letter-spacing:1.5px;padding:3px 8px;border-radius:4px;text-transform:uppercase;background:var(--orange);}
   .match-date-badge.cancelled-badge{background:#444;}
   .match-date-badge.completed-badge{background:var(--green);color:#000;}
   .match-date-badge.upcoming-badge{background:var(--blue);}
@@ -159,8 +152,8 @@
   .team-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--orange),var(--gold));transform:scaleX(0);transform-origin:left;transition:transform 0.4s ease;}
   .team-card:hover{transform:translateY(-8px);box-shadow:0 25px 60px rgba(0,0,0,0.4);border-color:rgba(255,94,14,0.4);}
   .team-card:hover::after{transform:scaleX(1);}
-  .team-logo{width:90px;height:90px;border-radius:50%;object-fit:cover;margin:0 auto 20px;display:block;border:3px solid var(--border);transition:all 0.3s;}
-  .team-card:hover .team-logo{border-color:var(--orange);box-shadow:0 0 30px rgba(255,94,14,0.3);}
+  .team-logo{width:90px;height:90px;border-radius:50%;object-fit:cover;margin:0 auto 20px;display:block;border:3px solid var(--border);}
+  .team-card:hover .team-logo{border-color:var(--orange);}
   .team-code{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;letter-spacing:4px;text-align:center;background:linear-gradient(135deg,var(--orange),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
   .team-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.2rem;letter-spacing:1px;text-align:center;margin-bottom:6px;}
   .team-captain{font-size:0.85rem;color:var(--muted);text-align:center;}
@@ -169,14 +162,14 @@
   .modal-overlay.open{display:flex;}
   .modal{background:var(--surface);border:1px solid var(--border);border-radius:20px;max-width:900px;width:100%;max-height:90vh;overflow-y:auto;position:relative;animation:modalIn 0.4s cubic-bezier(0.34,1.56,0.64,1) both;}
   @keyframes modalIn{from{opacity:0;transform:scale(0.85);}to{opacity:1;transform:scale(1);}}
-  .modal-header{padding:32px 32px 0;display:flex;align-items:center;gap:20px;border-bottom:1px solid var(--border);padding-bottom:24px;margin-bottom:0;}
+  .modal-header{padding:32px 32px 0;display:flex;align-items:center;gap:20px;border-bottom:1px solid var(--border);padding-bottom:24px;}
   .modal-logo{width:70px;height:70px;border-radius:50%;object-fit:cover;border:3px solid var(--orange);}
   .modal-title{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;letter-spacing:3px;background:linear-gradient(135deg,var(--orange),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-  .modal-close{position:absolute;top:20px;right:20px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid var(--border);cursor:pointer;color:var(--text);display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:all 0.3s;}
-  .modal-close:hover{background:var(--orange);border-color:var(--orange);}
+  .modal-close{position:absolute;top:20px;right:20px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.08);border:1px solid var(--border);cursor:pointer;color:var(--text);display:flex;align-items:center;justify-content:center;font-size:1.2rem;}
+  .modal-close:hover{background:var(--orange);}
   .modal-players{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:20px;padding:32px;}
   .player-card{background:var(--mid);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:all 0.3s;position:relative;}
-  .player-card:hover{transform:translateY(-4px);border-color:rgba(255,94,14,0.4);}
+  .player-card:hover{transform:translateY(-4px);}
   .player-photo{width:100%;aspect-ratio:1;object-fit:cover;object-position:top;}
   .player-info{padding:12px;}
   .player-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -190,13 +183,9 @@
   tbody tr:hover{background:rgba(255,94,14,0.06);}
   tbody td{padding:18px 20px;font-family:'Barlow Condensed',sans-serif;font-size:1.05rem;}
   .pos-badge{width:32px;height:32px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:0.9rem;}
-  .pos-1{background:var(--gold);color:#000;}
-  .pos-2{background:rgba(192,192,192,0.3);color:#ccc;}
-  .pos-3{background:rgba(205,127,50,0.3);color:#cd7f32;}
-  .pos-other{background:var(--mid);}
+  .pos-1{background:var(--gold);color:#000;}.pos-2{background:rgba(192,192,192,0.3);color:#ccc;}.pos-3{background:rgba(205,127,50,0.3);color:#cd7f32;}.pos-other{background:var(--mid);}
   .pts-val{color:var(--orange);font-weight:700;font-size:1.2rem;}
-  .pd-pos{color:var(--green);}
-  .pd-neg{color:var(--red);}
+  .pd-pos{color:var(--green);}.pd-neg{color:var(--red);}
   .team-row-logo{width:30px;height:30px;border-radius:50%;object-fit:cover;margin-right:10px;vertical-align:middle;}
   .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-bottom:50px;}
   .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px 24px;text-align:center;position:relative;overflow:hidden;}
@@ -209,43 +198,47 @@
   .rule-item{display:flex;align-items:flex-start;gap:16px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;transition:all 0.3s;}
   .rule-item:hover{border-color:rgba(255,94,14,0.4);transform:translateX(6px);}
   .rule-num{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;line-height:1;color:var(--orange);opacity:0.4;flex-shrink:0;width:40px;}
-  .rule-text{font-size:1rem;line-height:1.6;color:var(--text);}
-  footer{position:relative;z-index:1;background:var(--dark);border-top:1px solid var(--border);padding:50px 5% 30px;text-align:center;}
+  .rule-text{font-size:1rem;line-height:1.6;}
+  footer{position:relative;z-index:10;background:var(--dark);border-top:1px solid var(--border);padding:50px 5% 30px;text-align:center;}
   .footer-logo{font-family:'Bebas Neue',sans-serif;font-size:3rem;letter-spacing:6px;background:linear-gradient(135deg,var(--orange),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px;}
-  .footer-ig{display:inline-flex;align-items:center;gap:8px;color:var(--muted);text-decoration:none;font-size:0.9rem;margin:16px 0 32px;transition:color 0.3s;}
+  .footer-ig{display:inline-flex;align-items:center;gap:8px;color:var(--muted);text-decoration:none;font-size:0.9rem;margin:16px 0 32px;}
   .footer-ig:hover{color:var(--orange);}
   .footer-copy{font-size:0.8rem;color:var(--muted);}
   .tabs{display:flex;gap:4px;margin-bottom:30px;flex-wrap:wrap;}
   .tab{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.9rem;letter-spacing:2px;text-transform:uppercase;padding:10px 24px;border-radius:6px;cursor:pointer;background:var(--surface);border:1px solid var(--border);color:var(--muted);transition:all 0.3s;}
   .tab.active{background:var(--orange);border-color:var(--orange);color:#fff;}
-  .tab-panel{display:none;}
-  .tab-panel.active{display:block;}
+  .tab-panel{display:none;}.tab-panel.active{display:block;}
   @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes gradientShift{0%{background-position:0% center;}100%{background-position:200% center;}}
   .reveal{opacity:0;transform:translateY(40px);transition:opacity 0.7s,transform 0.7s;}
   .reveal.visible{opacity:1;transform:translateY(0);}
-  .divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:0;}
+  .divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);}
+  .btn{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;letter-spacing:2px;text-transform:uppercase;padding:14px 36px;border-radius:4px;cursor:pointer;text-decoration:none;border:none;transition:all 0.3s;}
+  .btn-primary{background:linear-gradient(135deg,var(--orange),#FF8C42);color:#fff;}
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(255,94,14,0.4);}
   @media(max-width:900px){.nav-links{gap:1.1rem;}.nav-links a{font-size:0.82rem;}}
   @media(max-width:768px){
     nav{padding:0 16px;height:60px;}.nav-links{display:none;}.nav-ig{display:none;}.nav-menu-btn{display:flex;}
-    section{padding:60px 16px;}#hero{padding:80px 16px 60px;}
-    .hero-ball{font-size:3.5rem;}.hero-title{font-size:clamp(3.2rem,16vw,5rem);}.hero-sub{font-size:0.95rem;margin:14px auto 24px;}.hero-date{font-size:1.3rem;}.hero-cta{gap:10px;}.btn{padding:12px 24px;font-size:0.9rem;}.scroll-hint{display:none;}
+    section{padding:60px 16px;}#hero{padding:80px 16px 20px;}
+    .hero-title{font-size:clamp(3.2rem,16vw,5rem);}
     .section-title{font-size:clamp(2rem,10vw,3rem);}
     .match-team-logo{width:44px;height:44px;}.match-team-name{font-size:0.78rem;}.match-vs{font-size:1.3rem;}.match-score{font-size:1.1rem;}.match-time{font-size:0.75rem;}.match-card{padding:12px 10px 10px;}.match-date-badge{font-size:0.55rem;padding:2px 6px;top:7px;right:7px;}
-    .final-logo{width:64px;height:64px;}.final-team-name{font-size:1rem;}.final-vs{font-size:2.2rem;}.match-card-final{padding:24px 16px;}
+    .final-logo{width:64px;height:64px;}.final-team-name{font-size:1rem;}.final-vs{font-size:2.2rem;}.match-card-final{padding:20px 14px;}
     .teams-grid{grid-template-columns:1fr 1fr;gap:12px;}.team-card{padding:20px 14px;}.team-logo{width:64px;height:64px;margin-bottom:12px;}.team-code{font-size:1.8rem;}.team-name{font-size:1rem;}.team-captain{font-size:0.75rem;}.team-player-count{font-size:0.8rem;margin-top:10px;padding-top:10px;}
-    .modal{border-radius:16px 16px 0 0;margin-top:auto;max-height:92vh;}.modal-overlay{align-items:flex-end;padding:0;}.modal-header{padding:18px 16px 14px;gap:14px;}.modal-logo{width:52px;height:52px;}.modal-title{font-size:1.8rem;}.modal-close{top:14px;right:14px;width:32px;height:32px;font-size:1rem;}.modal-players{grid-template-columns:repeat(3,1fr);gap:10px;padding:16px;}.player-name{font-size:0.8rem;}
+    .modal{border-radius:16px 16px 0 0;margin-top:auto;max-height:92vh;}.modal-overlay{align-items:flex-end;padding:0;}.modal-header{padding:18px 16px 14px;gap:14px;}.modal-logo{width:52px;height:52px;}.modal-title{font-size:1.8rem;}.modal-close{top:14px;right:14px;width:32px;height:32px;font-size:1rem;}.modal-players{grid-template-columns:repeat(3,1fr);gap:10px;padding:16px;}
     .table-wrap{border-radius:12px;overflow-x:auto;}table{min-width:420px;}thead th{padding:12px 10px;font-size:0.75rem;letter-spacing:1.5px;}tbody td{padding:12px 10px;font-size:0.9rem;}.team-row-logo{width:24px;height:24px;margin-right:6px;}.pos-badge{width:26px;height:26px;font-size:0.8rem;}
-    .stats-grid{grid-template-columns:1fr 1fr;gap:12px;margin-bottom:30px;}.stat-card{padding:20px 16px;}.stat-val{font-size:2.2rem;}.stat-icon{font-size:1.6rem;}
-    .tabs{gap:6px;margin-bottom:20px;}.tab{padding:8px 14px;font-size:0.8rem;letter-spacing:1px;}
+    .stats-grid{grid-template-columns:1fr 1fr;gap:12px;margin-bottom:30px;}.stat-card{padding:20px 16px;}.stat-val{font-size:2.2rem;}
+    .tabs{gap:6px;margin-bottom:20px;}.tab{padding:8px 14px;font-size:0.8rem;}
     .rules-grid{grid-template-columns:1fr;gap:12px;}.rule-item{padding:16px;}.rule-num{font-size:2rem;width:32px;}.rule-text{font-size:0.9rem;}
     footer{padding:36px 16px 24px;}.footer-logo{font-size:2.2rem;}
-    .invite-team-logo{width:48px;height:48px;}.invite-vs{font-size:2.2rem;}.final-invite-inner{padding:20px 16px;}.invite-title{font-size:clamp(1.6rem,8vw,2.8rem);}
+    .invite-score-pts{font-size:2rem;}.mott-photo{width:100px;height:100px;}.mott-name{font-size:2.2rem;}
   }
   @media(max-width:400px){.teams-grid{grid-template-columns:1fr 1fr;}.modal-players{grid-template-columns:repeat(2,1fr);}.stats-grid{grid-template-columns:1fr 1fr;}}
   ::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:var(--darker);}::-webkit-scrollbar-thumb{background:var(--orange);border-radius:3px;}
 </style>
 </head>
 <body>
+<canvas id="fw-canvas"></canvas>
 <div class="bg-grid"></div>
 <div class="bg-orb bg-orb1"></div>
 <div class="bg-orb bg-orb2"></div>
@@ -275,83 +268,113 @@
 <nav>
   <div class="nav-logo">CBT S2</div>
   <ul class="nav-links">
-    <li><a href="#hero">Home</a></li>
-    <li><a href="#matches">Matches</a></li>
-    <li><a href="#teams">Teams</a></li>
-    <li><a href="#points">Points</a></li>
-    <li><a href="#stats">Stats</a></li>
-    <li><a href="#rules">Rules</a></li>
+    <li><a href="#hero">Home</a></li><li><a href="#matches">Matches</a></li><li><a href="#teams">Teams</a></li><li><a href="#points">Points</a></li><li><a href="#stats">Stats</a></li><li><a href="#rules">Rules</a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:12px;">
     <a href="https://instagram.com/cbt.2026" target="_blank" class="nav-ig">
       <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
       @cbt.2026
     </a>
-    <div class="nav-menu-btn" onclick="openDrawer()" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </div>
+    <div class="nav-menu-btn" onclick="openDrawer()"><span></span><span></span><span></span></div>
   </div>
 </nav>
 
+<!-- CHAMPION TICKER BANNER -->
+<div class="champ-banner">
+  <div class="champ-ticker-wrap">
+    <div class="champ-ticker">
+      <span style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:4px;color:var(--green);padding:0 20px;">🏆 NO MERCY — CBT SEASON 2 CHAMPIONS</span>
+      <span style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:4px;color:var(--gold);padding:0 20px;">·</span>
+      <span style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:4px;color:var(--text);padding:0 20px;">FINAL: NM 35 — RF 33</span>
+      <span style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:4px;color:var(--gold);padding:0 20px;">·</span>
+      <span style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:4px;color:var(--gold);padding:0 20px;">MAN OF TOURNAMENT: BIPUL SHAHI</span>
+      <span style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:4px;color:var(--gold);padding:0 20px;">·</span>
+      <span style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:4px;color:var(--green);padding:0 20px;">🏆 NO MERCY — CBT SEASON 2 CHAMPIONS</span>
+      <span style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:4px;color:var(--gold);padding:0 20px;">·</span>
+      <span style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:4px;color:var(--text);padding:0 20px;">FINAL: NM 35 — RF 33</span>
+      <span style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:4px;color:var(--gold);padding:0 20px;">·</span>
+      <span style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:4px;color:var(--gold);padding:0 20px;">MAN OF TOURNAMENT: BIPUL SHAHI</span>
+      <span style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:4px;color:var(--gold);padding:0 20px;">·</span>
+    </div>
+  </div>
+</div>
+
 <!-- HERO -->
 <section id="hero">
-  <h1 class="hero-title" style="margin-bottom:0;">CBT<br><span>Season 2</span></h1>
+  <h1 class="hero-title">CBT<br><span>Season 2</span></h1>
 
-  <!-- FINAL INVITATION BANNER -->
+  <!-- CHAMPION CARD -->
   <div class="final-invite">
     <div class="final-invite-inner">
       <div class="invite-pulse-ring"></div>
       <div class="invite-pulse-ring2"></div>
-      <div class="invite-tag">🏆 Grand Final · Tomorrow · 14 March</div>
-      <div class="invite-title">YOU'RE INVITED</div>
-      <p style="font-family:'Barlow Condensed',sans-serif;font-size:1rem;letter-spacing:1px;color:var(--muted);margin-bottom:18px;">The last game of the season. Be there or miss history.</p>
+      <div class="invite-tag">🏆 CBT Season 2 — Champions</div>
+      <div class="invite-champ-name">NO MERCY</div>
+      <div class="invite-champ-sub">Season 2 Champions 🎉</div>
 
-      <div class="invite-matchup">
-        <div class="invite-team">
-          <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014681/WhatsApp_Image_2026-02-01_at_15.50.04_1_m1ta5o.jpg" alt="No Mercy" class="invite-team-logo">
-          <div class="invite-team-name">No Mercy</div>
-          <div class="invite-captain">Ritesh Chauhan</div>
+      <div class="invite-score-row">
+        <div class="invite-score-team">
+          <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014681/WhatsApp_Image_2026-02-01_at_15.50.04_1_m1ta5o.jpg" alt="No Mercy" class="invite-score-logo champ">
+          <div class="invite-score-name">No Mercy</div>
+          <div class="invite-score-pts w">35</div>
         </div>
-        <div class="invite-vs">VS</div>
-        <div class="invite-team">
-          <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-07_at_23.31.22_ieh5db.jpg" alt="Raptor Force" class="invite-team-logo alt">
-          <div class="invite-team-name">Raptor Force</div>
-          <div class="invite-captain">Mohin Gupta</div>
+        <div class="invite-score-sep">—</div>
+        <div class="invite-score-team">
+          <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-07_at_23.31.22_ieh5db.jpg" alt="Raptor Force" class="invite-score-logo">
+          <div class="invite-score-name">Raptor Force</div>
+          <div class="invite-score-pts l">33</div>
         </div>
       </div>
 
-      <div class="invite-details">
-        <div class="invite-detail-chip"><span>📍</span> Campus 11 · Court 1</div>
-        <div class="invite-detail-chip"><span>🕔</span> 5:00 PM · 14 March</div>
-        <div class="invite-detail-chip"><span>⏱️</span> 4 × 8 Min Quarters</div>
-      </div>
-      <div class="invite-format">Special Final Rules Apply · Entry Free · All Welcome</div>
-      <div class="invite-cta-row">
-        <a href="#matches" class="invite-btn invite-btn-gold">View Full Schedule</a>
-        <a href="https://instagram.com/cbt.2026" target="_blank" class="invite-btn invite-btn-outline">Share on IG</a>
+      <div class="invite-mott-strip">
+        <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1772902494/WhatsApp_Image_2026-03-07_at_22.24.18_vuoj1r.jpg" alt="Bipul Shahi" class="invite-mott-photo">
+        <div class="invite-mott-text">
+          <div class="invite-mott-label">🏅 Man of the Tournament</div>
+          <div class="invite-mott-name">Bipul Shahi · RF · 111 Pts</div>
+        </div>
       </div>
 
       <div class="ticker-wrap">
         <div class="ticker">
-          <span class="ticker-item">Grand Final</span><span class="ticker-dot">·</span>
+          <span class="ticker-item">🏆 No Mercy Champions</span><span class="ticker-dot">·</span>
+          <span class="ticker-item">Final NM 35 RF 33</span><span class="ticker-dot">·</span>
           <span class="ticker-item">14 March 2026</span><span class="ticker-dot">·</span>
-          <span class="ticker-item">Campus 11 Court 1</span><span class="ticker-dot">·</span>
-          <span class="ticker-item">5:00 PM</span><span class="ticker-dot">·</span>
-          <span class="ticker-item">No Mercy vs Raptor Force</span><span class="ticker-dot">·</span>
-          <span class="ticker-item">Last Game of the Season</span><span class="ticker-dot">·</span>
-          <span class="ticker-item">Grand Final</span><span class="ticker-dot">·</span>
+          <span class="ticker-item">MVP: Bipul Shahi</span><span class="ticker-dot">·</span>
+          <span class="ticker-item">CBT Season 2 — What A Season</span><span class="ticker-dot">·</span>
+          <span class="ticker-item">🏆 No Mercy Champions</span><span class="ticker-dot">·</span>
+          <span class="ticker-item">Final NM 35 RF 33</span><span class="ticker-dot">·</span>
           <span class="ticker-item">14 March 2026</span><span class="ticker-dot">·</span>
-          <span class="ticker-item">Campus 11 Court 1</span><span class="ticker-dot">·</span>
-          <span class="ticker-item">5:00 PM</span><span class="ticker-dot">·</span>
-          <span class="ticker-item">No Mercy vs Raptor Force</span><span class="ticker-dot">·</span>
-          <span class="ticker-item">Last Game of the Season</span><span class="ticker-dot">·</span>
+          <span class="ticker-item">MVP: Bipul Shahi</span><span class="ticker-dot">·</span>
+          <span class="ticker-item">CBT Season 2 — What A Season</span><span class="ticker-dot">·</span>
         </div>
       </div>
     </div>
   </div>
-
-
 </section>
+
+<div class="divider"></div>
+
+<!-- MAN OF THE TOURNAMENT -->
+<div class="mott-section reveal">
+  <div class="section-label" style="text-align:center;">Award</div>
+  <div class="section-title" style="text-align:center;">Man of the Tournament</div>
+  <div class="section-line" style="margin:8px auto 40px;"></div>
+  <div class="mott-card">
+    <div class="mott-r1"></div><div class="mott-r2"></div>
+    <span class="mott-trophy">🏆</span>
+    <div class="mott-badge">CBT Season 2 · MVP Award</div>
+    <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1772902494/WhatsApp_Image_2026-03-07_at_22.24.18_vuoj1r.jpg" alt="Bipul Shahi" class="mott-photo">
+    <div class="mott-name">Bipul Shahi</div>
+    <div class="mott-team">Raptor Force · RF</div>
+    <div class="mott-stats">
+      <div class="mott-stat"><div class="mott-stat-val">111</div><div class="mott-stat-lbl">Points</div></div>
+      <div class="mott-stat"><div class="mott-stat-val">3</div><div class="mott-stat-lbl">Free Throws</div></div>
+      <div class="mott-stat"><div class="mott-stat-val">1</div><div class="mott-stat-lbl">3-Pointers</div></div>
+      <div class="mott-stat"><div class="mott-stat-val">2</div><div class="mott-stat-lbl">Fouls</div></div>
+    </div>
+    <div class="mott-foot">🔥 Tournament Top Scorer · Season 2</div>
+  </div>
+</div>
 
 <div class="divider"></div>
 
@@ -361,7 +384,6 @@
   <div class="section-title reveal">Matches</div>
   <div class="section-line reveal"></div>
 
-  <!-- 9 MARCH -->
   <div class="matches-group reveal">
     <div class="matches-section-label">📅 9 March 2026 — Match Day 1</div>
     <div class="matches-grid">
@@ -369,38 +391,23 @@
         <div class="match-date-badge completed-badge">✓ Final Score</div>
         <div class="match-time">6:30 PM · 9 MARCH</div>
         <div class="match-teams">
-          <div class="match-team">
-            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014681/WhatsApp_Image_2026-02-01_at_15.50.04_1_m1ta5o.jpg" alt="No Mercy" class="match-team-logo">
-            <div class="match-team-name">No Mercy</div>
-            <div class="match-score loser">24</div>
-          </div>
+          <div class="match-team"><img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014681/WhatsApp_Image_2026-02-01_at_15.50.04_1_m1ta5o.jpg" alt="No Mercy" class="match-team-logo"><div class="match-team-name">No Mercy</div><div class="match-score loser">24</div></div>
           <div class="match-vs">VS</div>
-          <div class="match-team">
-            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-07_at_23.31.22_ieh5db.jpg" alt="Raptor Force" class="match-team-logo">
-            <div class="match-team-name">Raptor Force</div>
-            <div class="match-score winner">28</div>
-          </div>
+          <div class="match-team"><img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-07_at_23.31.22_ieh5db.jpg" alt="Raptor Force" class="match-team-logo"><div class="match-team-name">Raptor Force</div><div class="match-score winner">28</div></div>
         </div>
       </div>
       <div class="match-card cancelled">
         <div class="match-date-badge cancelled-badge">🚫 Cancelled</div>
         <div class="match-time">7:00 PM · 9 MARCH</div>
         <div class="match-teams">
-          <div class="match-team">
-            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-08_at_14.51.23_anwvww.jpg" alt="Wolves" class="match-team-logo">
-            <div class="match-team-name">Wolves</div>
-          </div>
+          <div class="match-team"><img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-08_at_14.51.23_anwvww.jpg" alt="Wolves" class="match-team-logo"><div class="match-team-name">Wolves</div></div>
           <div class="match-vs">VS</div>
-          <div class="match-team">
-            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-02-01_at_15.50.35_1_ekwftu.jpg" alt="Apex Howlers" class="match-team-logo">
-            <div class="match-team-name">Apex Howlers</div>
-          </div>
+          <div class="match-team"><img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-02-01_at_15.50.35_1_ekwftu.jpg" alt="Apex Howlers" class="match-team-logo"><div class="match-team-name">Apex Howlers</div></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 10 MARCH -->
   <div class="matches-group reveal">
     <div class="matches-section-label">📅 10 March 2026 — Match Day 2</div>
     <div class="matches-grid">
@@ -408,40 +415,23 @@
         <div class="match-date-badge completed-badge">✓ Final Score</div>
         <div class="match-time">6:15 PM · 10 MARCH</div>
         <div class="match-teams">
-          <div class="match-team">
-            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-07_at_23.31.22_ieh5db.jpg" alt="Raptor Force" class="match-team-logo">
-            <div class="match-team-name">Raptor Force</div>
-            <div class="match-score loser">27</div>
-          </div>
+          <div class="match-team"><img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-07_at_23.31.22_ieh5db.jpg" alt="Raptor Force" class="match-team-logo"><div class="match-team-name">Raptor Force</div><div class="match-score loser">27</div></div>
           <div class="match-vs">VS</div>
-          <div class="match-team">
-            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-02-01_at_15.50.35_1_ekwftu.jpg" alt="Apex Howlers" class="match-team-logo">
-            <div class="match-team-name">Apex Howlers</div>
-            <div class="match-score winner">31</div>
-          </div>
+          <div class="match-team"><img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-02-01_at_15.50.35_1_ekwftu.jpg" alt="Apex Howlers" class="match-team-logo"><div class="match-team-name">Apex Howlers</div><div class="match-score winner">31</div></div>
         </div>
       </div>
       <div class="match-card completed">
         <div class="match-date-badge completed-badge">✓ Final Score</div>
         <div class="match-time">7:00 PM · 10 MARCH</div>
         <div class="match-teams">
-          <div class="match-team">
-            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014681/WhatsApp_Image_2026-02-01_at_15.50.04_1_m1ta5o.jpg" alt="No Mercy" class="match-team-logo">
-            <div class="match-team-name">No Mercy</div>
-            <div class="match-score winner">39</div>
-          </div>
+          <div class="match-team"><img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014681/WhatsApp_Image_2026-02-01_at_15.50.04_1_m1ta5o.jpg" alt="No Mercy" class="match-team-logo"><div class="match-team-name">No Mercy</div><div class="match-score winner">39</div></div>
           <div class="match-vs">VS</div>
-          <div class="match-team">
-            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-08_at_14.51.23_anwvww.jpg" alt="Wolves" class="match-team-logo">
-            <div class="match-team-name">Wolves</div>
-            <div class="match-score loser">30</div>
-          </div>
+          <div class="match-team"><img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-08_at_14.51.23_anwvww.jpg" alt="Wolves" class="match-team-logo"><div class="match-team-name">Wolves</div><div class="match-score loser">30</div></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 11 MARCH -->
   <div class="matches-group reveal">
     <div class="matches-section-label">📅 11 March 2026 — Match Day 3</div>
     <div class="matches-grid">
@@ -449,40 +439,23 @@
         <div class="match-date-badge completed-badge">✓ Final Score</div>
         <div class="match-time">6:00 PM · 11 MARCH</div>
         <div class="match-teams">
-          <div class="match-team">
-            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-02-01_at_15.50.35_1_ekwftu.jpg" alt="Apex Howlers" class="match-team-logo">
-            <div class="match-team-name">Apex Howlers</div>
-            <div class="match-score loser">32</div>
-          </div>
+          <div class="match-team"><img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-02-01_at_15.50.35_1_ekwftu.jpg" alt="Apex Howlers" class="match-team-logo"><div class="match-team-name">Apex Howlers</div><div class="match-score loser">32</div></div>
           <div class="match-vs">VS</div>
-          <div class="match-team">
-            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014681/WhatsApp_Image_2026-02-01_at_15.50.04_1_m1ta5o.jpg" alt="No Mercy" class="match-team-logo">
-            <div class="match-team-name">No Mercy</div>
-            <div class="match-score winner">48</div>
-          </div>
+          <div class="match-team"><img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014681/WhatsApp_Image_2026-02-01_at_15.50.04_1_m1ta5o.jpg" alt="No Mercy" class="match-team-logo"><div class="match-team-name">No Mercy</div><div class="match-score winner">48</div></div>
         </div>
       </div>
       <div class="match-card completed">
         <div class="match-date-badge completed-badge">✓ Final Score</div>
         <div class="match-time">6:40 PM · 11 MARCH</div>
         <div class="match-teams">
-          <div class="match-team">
-            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-07_at_23.31.22_ieh5db.jpg" alt="Raptor Force" class="match-team-logo">
-            <div class="match-team-name">Raptor Force</div>
-            <div class="match-score winner">74</div>
-          </div>
+          <div class="match-team"><img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-07_at_23.31.22_ieh5db.jpg" alt="Raptor Force" class="match-team-logo"><div class="match-team-name">Raptor Force</div><div class="match-score winner">74</div></div>
           <div class="match-vs">VS</div>
-          <div class="match-team">
-            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-08_at_14.51.23_anwvww.jpg" alt="Wolves" class="match-team-logo">
-            <div class="match-team-name">Wolves</div>
-            <div class="match-score loser">51</div>
-          </div>
+          <div class="match-team"><img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-08_at_14.51.23_anwvww.jpg" alt="Wolves" class="match-team-logo"><div class="match-team-name">Wolves</div><div class="match-score loser">51</div></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 12 MARCH -->
   <div class="matches-group reveal">
     <div class="matches-section-label">📅 12 March 2026 — Match Day 4</div>
     <div class="matches-grid">
@@ -490,40 +463,23 @@
         <div class="match-date-badge completed-badge">✓ Final Score</div>
         <div class="match-time">5:30 PM · 12 MARCH</div>
         <div class="match-teams">
-          <div class="match-team">
-            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-08_at_14.51.23_anwvww.jpg" alt="Wolves" class="match-team-logo">
-            <div class="match-team-name">Wolves</div>
-            <div class="match-score loser">52</div>
-          </div>
+          <div class="match-team"><img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-08_at_14.51.23_anwvww.jpg" alt="Wolves" class="match-team-logo"><div class="match-team-name">Wolves</div><div class="match-score loser">52</div></div>
           <div class="match-vs">VS</div>
-          <div class="match-team">
-            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014681/WhatsApp_Image_2026-02-01_at_15.50.04_1_m1ta5o.jpg" alt="No Mercy" class="match-team-logo">
-            <div class="match-team-name">No Mercy</div>
-            <div class="match-score winner">60</div>
-          </div>
+          <div class="match-team"><img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014681/WhatsApp_Image_2026-02-01_at_15.50.04_1_m1ta5o.jpg" alt="No Mercy" class="match-team-logo"><div class="match-team-name">No Mercy</div><div class="match-score winner">60</div></div>
         </div>
       </div>
       <div class="match-card completed">
         <div class="match-date-badge completed-badge">✓ Final Score</div>
         <div class="match-time">6:30 PM · 12 MARCH</div>
         <div class="match-teams">
-          <div class="match-team">
-            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-02-01_at_15.50.35_1_ekwftu.jpg" alt="Apex Howlers" class="match-team-logo">
-            <div class="match-team-name">Apex Howlers</div>
-            <div class="match-score loser">36</div>
-          </div>
+          <div class="match-team"><img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-02-01_at_15.50.35_1_ekwftu.jpg" alt="Apex Howlers" class="match-team-logo"><div class="match-team-name">Apex Howlers</div><div class="match-score loser">36</div></div>
           <div class="match-vs">VS</div>
-          <div class="match-team">
-            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-07_at_23.31.22_ieh5db.jpg" alt="Raptor Force" class="match-team-logo">
-            <div class="match-team-name">Raptor Force</div>
-            <div class="match-score winner">45</div>
-          </div>
+          <div class="match-team"><img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-07_at_23.31.22_ieh5db.jpg" alt="Raptor Force" class="match-team-logo"><div class="match-team-name">Raptor Force</div><div class="match-score winner">45</div></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 13 MARCH - COMPLETED -->
   <div class="matches-group reveal">
     <div class="matches-section-label">📅 13 March 2026 — Match Day 5</div>
     <div class="matches-grid">
@@ -531,37 +487,29 @@
         <div class="match-date-badge completed-badge">✓ Final Score</div>
         <div class="match-time">5:30 PM · 13 MARCH</div>
         <div class="match-teams">
-          <div class="match-team">
-            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-02-01_at_15.50.35_1_ekwftu.jpg" alt="Apex Howlers" class="match-team-logo">
-            <div class="match-team-name">Apex Howlers</div>
-            <div class="match-score winner">64</div>
-          </div>
+          <div class="match-team"><img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-02-01_at_15.50.35_1_ekwftu.jpg" alt="Apex Howlers" class="match-team-logo"><div class="match-team-name">Apex Howlers</div><div class="match-score winner">64</div></div>
           <div class="match-vs">VS</div>
-          <div class="match-team">
-            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-08_at_14.51.23_anwvww.jpg" alt="Wolves" class="match-team-logo">
-            <div class="match-team-name">Wolves</div>
-            <div class="match-score loser">63</div>
-          </div>
+          <div class="match-team"><img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-08_at_14.51.23_anwvww.jpg" alt="Wolves" class="match-team-logo"><div class="match-team-name">Wolves</div><div class="match-score loser">63</div></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 14 MARCH - GRAND FINAL -->
   <div class="matches-group reveal">
     <div class="matches-section-label">🏆 14 March 2026 — GRAND FINAL</div>
     <div class="matches-grid-final">
-      <div class="match-card match-card-final" style="border-color:rgba(255,184,0,0.6);">
+      <div class="match-card match-card-final">
         <div class="final-glow"></div>
-        <div class="match-date-badge" style="background:linear-gradient(135deg,var(--orange),var(--gold));color:#000;font-size:0.75rem;padding:5px 14px;letter-spacing:2px;">🏆 GRAND FINAL</div>
-        <div class="match-time" style="font-size:1rem;margin-bottom:16px;">5:00 PM · 14 MARCH</div>
+        <div class="match-date-badge completed-badge" style="font-size:0.72rem;padding:4px 12px;letter-spacing:1.5px;">✓ CHAMPIONS CROWNED</div>
+        <div class="match-time" style="font-size:1rem;margin-bottom:14px;">5:00 PM · 14 MARCH</div>
         <div class="final-venue">📍 Campus 11 · Court 1</div>
-        <div class="final-format">4 Quarters × 8 Minutes &nbsp;|&nbsp; Special Final Rules Apply</div>
+        <div class="final-format">4 Quarters × 8 Minutes · Special Final Rules</div>
         <div class="match-teams final-teams">
           <div class="match-team">
-            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014681/WhatsApp_Image_2026-02-01_at_15.50.04_1_m1ta5o.jpg" alt="No Mercy" class="match-team-logo final-logo">
+            <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014681/WhatsApp_Image_2026-02-01_at_15.50.04_1_m1ta5o.jpg" alt="No Mercy" class="match-team-logo final-logo final-logo-champ">
             <div class="match-team-name final-team-name">No Mercy</div>
             <div class="final-captain">⚡ Ritesh Chauhan</div>
+            <div class="match-score winner" style="font-size:2.4rem;margin-top:6px;">35</div>
           </div>
           <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
             <div class="match-vs final-vs">VS</div>
@@ -571,13 +519,13 @@
             <img src="https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-07_at_23.31.22_ieh5db.jpg" alt="Raptor Force" class="match-team-logo final-logo">
             <div class="match-team-name final-team-name">Raptor Force</div>
             <div class="final-captain">⚡ Mohin Gupta</div>
+            <div class="match-score loser" style="font-size:2.4rem;margin-top:6px;">33</div>
           </div>
         </div>
-        <div class="final-footer-bar">LAST GAME OF THE SEASON — COME CHEER YOUR TEAM 🔥</div>
+        <div class="final-footer-bar">🏆 NO MERCY ARE CBT SEASON 2 CHAMPIONS! 🏆</div>
       </div>
     </div>
   </div>
-
 </section>
 
 <div class="divider"></div>
@@ -590,7 +538,6 @@
   <div class="teams-grid reveal" id="teams-grid"></div>
 </section>
 
-<!-- MODAL -->
 <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
   <div class="modal" id="modal">
     <button class="modal-close" onclick="closeModalBtn()">✕</button>
@@ -608,9 +555,7 @@
   <div class="section-line reveal"></div>
   <div class="table-wrap reveal">
     <table>
-      <thead>
-        <tr><th>POS</th><th>TEAM</th><th>MP</th><th>W</th><th>L</th><th>PD</th><th>PTS</th></tr>
-      </thead>
+      <thead><tr><th>POS</th><th>TEAM</th><th>MP</th><th>W</th><th>L</th><th>PD</th><th>PTS</th></tr></thead>
       <tbody id="points-table"></tbody>
     </table>
   </div>
@@ -626,7 +571,7 @@
   <div class="stats-grid reveal">
     <div class="stat-card"><div class="stat-icon">🏀</div><div class="stat-val">4</div><div class="stat-label">Teams</div></div>
     <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-val" id="total-players">0</div><div class="stat-label">Players</div></div>
-    <div class="stat-card"><div class="stat-icon">🏆</div><div class="stat-val">7</div><div class="stat-label">Games Played</div></div>
+    <div class="stat-card"><div class="stat-icon">🏆</div><div class="stat-val">8</div><div class="stat-label">Games Played</div></div>
     <div class="stat-card"><div class="stat-icon">⭐</div><div class="stat-val">S2</div><div class="stat-label">Season</div></div>
   </div>
   <div class="tabs reveal">
@@ -635,18 +580,10 @@
     <div class="tab" onclick="switchTab(this,'tab-ft')">Free Throws</div>
     <div class="tab" onclick="switchTab(this,'tab-fouls')">Fouls</div>
   </div>
-  <div class="tab-panel active" id="tab-pts">
-    <div class="table-wrap"><table class="player-stats-table"><thead><tr><th>RANK</th><th>PLAYER</th><th>TEAM</th><th>PTS</th></tr></thead><tbody id="stats-pts"></tbody></table></div>
-  </div>
-  <div class="tab-panel" id="tab-3pt">
-    <div class="table-wrap"><table class="player-stats-table"><thead><tr><th>RANK</th><th>PLAYER</th><th>TEAM</th><th>3PM</th></tr></thead><tbody id="stats-3pt"></tbody></table></div>
-  </div>
-  <div class="tab-panel" id="tab-ft">
-    <div class="table-wrap"><table class="player-stats-table"><thead><tr><th>RANK</th><th>PLAYER</th><th>TEAM</th><th>FT</th></tr></thead><tbody id="stats-ft"></tbody></table></div>
-  </div>
-  <div class="tab-panel" id="tab-fouls">
-    <div class="table-wrap"><table class="player-stats-table"><thead><tr><th>RANK</th><th>PLAYER</th><th>TEAM</th><th>FOULS</th></tr></thead><tbody id="stats-fouls"></tbody></table></div>
-  </div>
+  <div class="tab-panel active" id="tab-pts"><div class="table-wrap"><table class="player-stats-table"><thead><tr><th>RANK</th><th>PLAYER</th><th>TEAM</th><th>PTS</th></tr></thead><tbody id="stats-pts"></tbody></table></div></div>
+  <div class="tab-panel" id="tab-3pt"><div class="table-wrap"><table class="player-stats-table"><thead><tr><th>RANK</th><th>PLAYER</th><th>TEAM</th><th>3PM</th></tr></thead><tbody id="stats-3pt"></tbody></table></div></div>
+  <div class="tab-panel" id="tab-ft"><div class="table-wrap"><table class="player-stats-table"><thead><tr><th>RANK</th><th>PLAYER</th><th>TEAM</th><th>FT</th></tr></thead><tbody id="stats-ft"></tbody></table></div></div>
+  <div class="tab-panel" id="tab-fouls"><div class="table-wrap"><table class="player-stats-table"><thead><tr><th>RANK</th><th>PLAYER</th><th>TEAM</th><th>FOULS</th></tr></thead><tbody id="stats-fouls"></tbody></table></div></div>
 </section>
 
 <div class="divider"></div>
@@ -660,14 +597,13 @@
     <div class="rule-item"><div class="rule-num">01</div><div class="rule-text">Each match will consist of <strong>4 quarters of 8 minutes</strong> each.</div></div>
     <div class="rule-item"><div class="rule-num">02</div><div class="rule-text"><strong>5 fouls</strong> = player is permanently out of the match.</div></div>
     <div class="rule-item"><div class="rule-num">03</div><div class="rule-text">Referee and <strong>Organizing Committee (OC)</strong> decisions will be final.</div></div>
-    <div class="rule-item"><div class="rule-num">04</div><div class="rule-text"><strong>Top 2 teams</strong> from the points table directly qualify for the Finals (No Semifinals).</div></div>
+    <div class="rule-item"><div class="rule-num">04</div><div class="rule-text"><strong>Top 2 teams</strong> from the points table directly qualify for the Finals.</div></div>
     <div class="rule-item"><div class="rule-num">05</div><div class="rule-text">Maintain discipline, respect opponents, and <strong>play fair</strong>.</div></div>
     <div class="rule-item"><div class="rule-num">06</div><div class="rule-text">During match, <strong>referee decision is final</strong>.</div></div>
     <div class="rule-item"><div class="rule-num">07</div><div class="rule-text">Team must <strong>arrive on time</strong> — late arrival results in a default loss.</div></div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-logo">CBT S2</div>
   <p style="color:var(--muted);font-size:0.9rem;">Campus Basketball Tournament · Season 2</p>
@@ -679,13 +615,14 @@
 </footer>
 
 <script>
+// ── PLAYER STATS (final updated) ──
 const playerStats = {
-  "Ritesh Chauhan":          {pts:38,  three:2, ft:4,  fouls:7},
-  "Shailesh Singh":          {pts:51,  three:3, ft:2,  fouls:9},
-  "Himadri Shekhar Paul":    {pts:12,  three:0, ft:0,  fouls:2},
+  "Ritesh Chauhan":          {pts:48,  three:2, ft:7,  fouls:10},
+  "Shailesh Singh":          {pts:69,  three:6, ft:2,  fouls:11},
+  "Himadri Shekhar Paul":    {pts:12,  three:0, ft:0,  fouls:5},
   "Sahil Gupta":             {pts:4,   three:0, ft:0,  fouls:2},
-  "Ashirbad Mishra":         {pts:29,  three:0, ft:0,  fouls:7},
-  "Aaditya Thakur":          {pts:46,  three:0, ft:2,  fouls:5},
+  "Ashirbad Mishra":         {pts:31,  three:0, ft:0,  fouls:10},
+  "Aaditya Thakur":          {pts:52,  three:0, ft:2,  fouls:9},
   "Avinash Khatri":          {pts:0,   three:0, ft:0,  fouls:1},
   "Swastik Subhadarshi Jena":{pts:0,   three:0, ft:0,  fouls:2},
   "Soumitra Bhattarjee":     {pts:61,  three:2, ft:9,  fouls:7},
@@ -702,160 +639,117 @@ const playerStats = {
   "Yuvaraj Sharma":          {pts:8,   three:0, ft:0,  fouls:12},
   "Raunak Chowdhury":        {pts:51,  three:2, ft:1,  fouls:1},
   "Ankan Giri":              {pts:57,  three:0, ft:1,  fouls:3},
-  "Peeyush Shah":            {pts:17,  three:0, ft:1,  fouls:5},
-  "Yubraj Shah":             {pts:0,   three:0, ft:0,  fouls:6},
+  "Peeyush Shah":            {pts:17,  three:0, ft:1,  fouls:7},
+  "Yubraj Shah":             {pts:0,   three:0, ft:0,  fouls:9},
   "Ankit Bhandari":          {pts:2,   three:0, ft:0,  fouls:6},
   "Prince Shah":             {pts:0,   three:0, ft:0,  fouls:0},
   "Praagya Parajuli":        {pts:2,   three:0, ft:0,  fouls:1},
-  "Mohin Gupta":             {pts:42,  three:0, ft:4,  fouls:11},
-  "Samrat Lamsal":           {pts:20,  three:0, ft:0,  fouls:7},
-  "Bipul Shahi":             {pts:91,  three:1, ft:2,  fouls:2}
+  "Mohin Gupta":             {pts:50,  three:0, ft:4,  fouls:15},
+  "Samrat Lamsal":           {pts:24,  three:0, ft:0,  fouls:9},
+  "Bipul Shahi":             {pts:111, three:1, ft:3,  fouls:2}
 };
 
 const teams = [
-  {
-    teamCode:"NM", teamName:"No Mercy",
-    logo:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014681/WhatsApp_Image_2026-02-01_at_15.50.04_1_m1ta5o.jpg",
-    captainName:"Ritesh Chauhan",
-    players:[
-      {name:"Ritesh Chauhan",          image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1770087303/WhatsApp_Image_2026-02-03_at_08.23.49_1_c9vghk.jpg", captain:true},
-      {name:"Shailesh Singh",          image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1770087303/WhatsApp_Image_2026-02-03_at_08.23.50_fsrm73.jpg"},
-      {name:"Himadri Shekhar Paul",    image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956583/PXL_20251220_034728663_-_HIMADRI_SHEKHAR_PAUL_gb2am8.jpg"},
-      {name:"Sahil Gupta",             image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956574/IMG_0344_-_Sahil_Gupta_ibenvb.jpg"},
-      {name:"Ashirbad Mishra",         image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956548/Screenshot_20260102-095329_-_Ashirbad_Mishra_otbo1m.png"},
-      {name:"Aaditya Thakur",          image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956538/20260102_164658_-_488_AADITYA_THAKUR_pxmm0t.jpg"},
-      {name:"Avinash Khatri",          image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1773142623/WhatsApp_Image_2026-03-10_at_17.03.27_xxjrzz.jpg"},
-      {name:"Swastik Subhadarshi Jena",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956568/IMG-20250603-WA0017_-_Swastik_Subhadarshi_Jena_vvgixc.jpg"}
-    ]
-  },
-  {
-    teamCode:"WL", teamName:"Wolves",
-    logo:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-08_at_14.51.23_anwvww.jpg",
-    captainName:"Soumitra Bhattarjee",
-    players:[
-      {name:"Soumitra Bhattarjee",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956559/IMG_7826_-_Soumitra_Bhattacharjee_ct0ejg.jpg", captain:true},
-      {name:"Harsh Mishra",       image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1770087304/WhatsApp_Image_2026-02-03_at_08.20.59_v1wzxz.jpg"},
-      {name:"Harshit Shah",       image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956576/inbound3930235043688670670_-_HARSHIT_SHAH_lmmdmu.jpg"},
-      {name:"Akash Mukharjee",    image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956579/B612_20250522_183955_536_-_Akash_Mukherjee_r0jatg.jpg"},
-      {name:"Aryan Singh",        image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956570/IMG-20260127-WA0176_-_Aryan_Singh_lziai9.jpg"},
-      {name:"Anik Ghosh",         image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956561/IMG-20250917-WA0022_-_ANIK_GHOSH_xpnfwy.jpg"},
-      {name:"Debadatta Mohanty",  image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956541/IMG_20260127_195002_550_-_Debadatta_Mohanty_lfuyqw.webp"}
-    ]
-  },
-  {
-    teamCode:"AH", teamName:"Apex Howlers",
-    logo:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-02-01_at_15.50.35_1_ekwftu.jpg",
-    captainName:"Raghav Sah",
-    players:[
-      {name:"Raghav Sah",            image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1770087304/WhatsApp_Image_2026-02-03_at_08.23.50_1_tr2gwo.jpg", captain:true},
-      {name:"Sambridda Ranabhat",    image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1772902643/IMG-20260228-WA0005_-_SAMBRIDDA_RANABHAT_vdh9ms.jpg"},
-      {name:"Shishir Yadav",         image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956560/IMG-20251105-WA0085_-_SHISHIR_YADAV_kweujk.jpg"},
-      {name:"Suhit Ranjan Majumder", image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956564/IMG_20260131_115552_-_Suhit_Majumder_bhz0wb.jpg"},
-      {name:"Yuvaraj Sharma",        image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956567/1769840040871_-_Yuvaraj_Sharma_netuja.jpg"},
-      {name:"Raunak Chowdhury",      image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956578/IMG-20241202-WA0009_Original_-_Raunak_Chowdhury_xzcw0p.jpg"},
-      {name:"Ankan Giri",            image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1770087304/WhatsApp_Image_2026-02-03_at_08.23.49_l4swdm.jpg"}
-    ]
-  },
-  {
-    teamCode:"RF", teamName:"Raptor Force",
-    logo:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-07_at_23.31.22_ieh5db.jpg",
-    captainName:"Peeyush Shah",
-    players:[
-      {name:"Peeyush Shah",    image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956556/IMG_8314_-_Raza_Shah_zn69xp.jpg", captain:true},
-      {name:"Yubraj Shah",     image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1773013885/IMG_3080.JPG_vo3s98.jpg"},
-      {name:"Ankit Bhandari",  image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769955360/samples/landscapes/beach-boat.jpg"},
-      {name:"Prince Shah",     image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956549/1000249497_1_-_Trusteddai_Hu_bwiely.webp"},
-      {name:"Praagya Parajuli",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956547/IMG-20240101-WA0003_-_praagya_parajuli_kqxvwc.jpg"},
-      {name:"Mohin Gupta",     image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956540/IMG_6090_-_Mohin_Kumar_Gupta_mqa8md.jpg"},
-      {name:"Samrat Lamsal",   image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1772902820/IMG20260111174711_-_Samrat_Lamsal_ejmhan.jpg"},
-      {name:"Bipul Shahi",     image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1772902494/WhatsApp_Image_2026-03-07_at_22.24.18_vuoj1r.jpg"}
-    ]
-  }
+  {teamCode:"NM",teamName:"No Mercy",logo:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014681/WhatsApp_Image_2026-02-01_at_15.50.04_1_m1ta5o.jpg",captainName:"Ritesh Chauhan",players:[
+    {name:"Ritesh Chauhan",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1770087303/WhatsApp_Image_2026-02-03_at_08.23.49_1_c9vghk.jpg",captain:true},
+    {name:"Shailesh Singh",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1770087303/WhatsApp_Image_2026-02-03_at_08.23.50_fsrm73.jpg"},
+    {name:"Himadri Shekhar Paul",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956583/PXL_20251220_034728663_-_HIMADRI_SHEKHAR_PAUL_gb2am8.jpg"},
+    {name:"Sahil Gupta",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956574/IMG_0344_-_Sahil_Gupta_ibenvb.jpg"},
+    {name:"Ashirbad Mishra",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956548/Screenshot_20260102-095329_-_Ashirbad_Mishra_otbo1m.png"},
+    {name:"Aaditya Thakur",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956538/20260102_164658_-_488_AADITYA_THAKUR_pxmm0t.jpg"},
+    {name:"Avinash Khatri",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1773142623/WhatsApp_Image_2026-03-10_at_17.03.27_xxjrzz.jpg"},
+    {name:"Swastik Subhadarshi Jena",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956568/IMG-20250603-WA0017_-_Swastik_Subhadarshi_Jena_vvgixc.jpg"}
+  ]},
+  {teamCode:"WL",teamName:"Wolves",logo:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-08_at_14.51.23_anwvww.jpg",captainName:"Soumitra Bhattarjee",players:[
+    {name:"Soumitra Bhattarjee",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956559/IMG_7826_-_Soumitra_Bhattacharjee_ct0ejg.jpg",captain:true},
+    {name:"Harsh Mishra",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1770087304/WhatsApp_Image_2026-02-03_at_08.20.59_v1wzxz.jpg"},
+    {name:"Harshit Shah",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956576/inbound3930235043688670670_-_HARSHIT_SHAH_lmmdmu.jpg"},
+    {name:"Akash Mukharjee",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956579/B612_20250522_183955_536_-_Akash_Mukherjee_r0jatg.jpg"},
+    {name:"Aryan Singh",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956570/IMG-20260127-WA0176_-_Aryan_Singh_lziai9.jpg"},
+    {name:"Anik Ghosh",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956561/IMG-20250917-WA0022_-_ANIK_GHOSH_xpnfwy.jpg"},
+    {name:"Debadatta Mohanty",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956541/IMG_20260127_195002_550_-_Debadatta_Mohanty_lfuyqw.webp"}
+  ]},
+  {teamCode:"AH",teamName:"Apex Howlers",logo:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-02-01_at_15.50.35_1_ekwftu.jpg",captainName:"Raghav Sah",players:[
+    {name:"Raghav Sah",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1770087304/WhatsApp_Image_2026-02-03_at_08.23.50_1_tr2gwo.jpg",captain:true},
+    {name:"Sambridda Ranabhat",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1772902643/IMG-20260228-WA0005_-_SAMBRIDDA_RANABHAT_vdh9ms.jpg"},
+    {name:"Shishir Yadav",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956560/IMG-20251105-WA0085_-_SHISHIR_YADAV_kweujk.jpg"},
+    {name:"Suhit Ranjan Majumder",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956564/IMG_20260131_115552_-_Suhit_Majumder_bhz0wb.jpg"},
+    {name:"Yuvaraj Sharma",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956567/1769840040871_-_Yuvaraj_Sharma_netuja.jpg"},
+    {name:"Raunak Chowdhury",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956578/IMG-20241202-WA0009_Original_-_Raunak_Chowdhury_xzcw0p.jpg"},
+    {name:"Ankan Giri",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1770087304/WhatsApp_Image_2026-02-03_at_08.23.49_l4swdm.jpg"}
+  ]},
+  {teamCode:"RF",teamName:"Raptor Force",logo:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1773014680/WhatsApp_Image_2026-03-07_at_23.31.22_ieh5db.jpg",captainName:"Peeyush Shah",players:[
+    {name:"Peeyush Shah",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956556/IMG_8314_-_Raza_Shah_zn69xp.jpg",captain:true},
+    {name:"Yubraj Shah",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1773013885/IMG_3080.JPG_vo3s98.jpg"},
+    {name:"Ankit Bhandari",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769955360/samples/landscapes/beach-boat.jpg"},
+    {name:"Prince Shah",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956549/1000249497_1_-_Trusteddai_Hu_bwiely.webp"},
+    {name:"Praagya Parajuli",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956547/IMG-20240101-WA0003_-_praagya_parajuli_kqxvwc.jpg"},
+    {name:"Mohin Gupta",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1769956540/IMG_6090_-_Mohin_Kumar_Gupta_mqa8md.jpg"},
+    {name:"Samrat Lamsal",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1772902820/IMG20260111174711_-_Samrat_Lamsal_ejmhan.jpg"},
+    {name:"Bipul Shahi",image:"https://res.cloudinary.com/dj85g5tsx/image/upload/v1772902494/WhatsApp_Image_2026-03-07_at_22.24.18_vuoj1r.jpg"}
+  ]}
 ];
 
 const pointsData = [
-  {logo:teams[0].logo, name:"No Mercy",     code:"NM", mp:4, w:3, l:1, pd:+29, pts:6, qualified:true},
-  {logo:teams[3].logo, name:"Raptor Force", code:"RF", mp:4, w:3, l:1, pd:+32, pts:6, qualified:true},
-  {logo:teams[2].logo, name:"Apex Howlers", code:"AH", mp:4, w:2, l:2, pd:-20, pts:4, eliminated:true},
-  {logo:teams[1].logo, name:"Wolves",       code:"WL", mp:4, w:0, l:4, pd:-41, pts:0, eliminated:true},
+  {logo:teams[0].logo,name:"No Mercy",    code:"NM",mp:5,w:4,l:1,pd:+31,pts:8,champ:true},
+  {logo:teams[3].logo,name:"Raptor Force",code:"RF",mp:5,w:3,l:2,pd:+30,pts:6},
+  {logo:teams[2].logo,name:"Apex Howlers",code:"AH",mp:5,w:2,l:3,pd:-19,pts:4,eliminated:true},
+  {logo:teams[1].logo,name:"Wolves",      code:"WL",mp:5,w:0,l:5,pd:-42,pts:0,eliminated:true},
 ];
 
-const nameToTeam = {};
-teams.forEach(t => { t.players.forEach(p => { nameToTeam[p.name] = t.teamCode; }); });
+const nameToTeam={};
+teams.forEach(t=>t.players.forEach(p=>{nameToTeam[p.name]=t.teamCode;}));
 
-const teamsGrid = document.getElementById('teams-grid');
-let totalPlayers = 0;
-teams.forEach((t, i) => {
-  totalPlayers += t.players.length;
-  const card = document.createElement('div');
-  card.className = 'team-card';
-  card.innerHTML = `
-    <img src="${t.logo}" alt="${t.teamName}" class="team-logo" onerror="this.src='https://via.placeholder.com/90'">
-    <div class="team-code">${t.teamCode}</div>
-    <div class="team-name">${t.teamName}</div>
-    <div class="team-captain">Captain: ${t.captainName}</div>
-    <div class="team-player-count">${t.players.length} Players</div>
-  `;
-  card.onclick = () => openModal(i);
+const teamsGrid=document.getElementById('teams-grid');
+let totalPlayers=0;
+teams.forEach((t,i)=>{
+  totalPlayers+=t.players.length;
+  const card=document.createElement('div');
+  card.className='team-card';
+  card.innerHTML=`<img src="${t.logo}" alt="${t.teamName}" class="team-logo" onerror="this.src='https://via.placeholder.com/90'"><div class="team-code">${t.teamCode}</div><div class="team-name">${t.teamName}</div><div class="team-captain">Captain: ${t.captainName}</div><div class="team-player-count">${t.players.length} Players</div>`;
+  card.onclick=()=>openModal(i);
   teamsGrid.appendChild(card);
 });
-document.getElementById('total-players').textContent = totalPlayers;
+document.getElementById('total-players').textContent=totalPlayers;
 
-function openModal(idx) {
-  const t = teams[idx];
-  document.getElementById('modal-header').innerHTML = `
-    <img src="${t.logo}" alt="${t.teamName}" class="modal-logo" onerror="this.src='https://via.placeholder.com/70'">
-    <div>
-      <div class="modal-title">${t.teamName}</div>
-      <div style="color:var(--muted);font-size:0.9rem;letter-spacing:1px;">Captain: ${t.captainName} · ${t.players.length} Players</div>
-    </div>
-  `;
-  const container = document.getElementById('modal-players');
-  container.innerHTML = '';
-  t.players.forEach(p => {
-    const card = document.createElement('div');
-    card.className = 'player-card';
-    const s = playerStats[p.name] || {pts:0,three:0,ft:0,fouls:0};
-    card.innerHTML = `
-      ${p.captain ? '<div class="captain-badge">Captain</div>' : ''}
-      <img src="${p.image}" alt="${p.name}" class="player-photo" onerror="this.src='https://via.placeholder.com/150'">
-      <div class="player-info">
-        <div class="player-name">${p.name}</div>
-        <div style="font-size:0.75rem;color:var(--muted);margin-top:4px;">PTS: ${s.pts} · 3P: ${s.three} · FT: ${s.ft}</div>
-      </div>
-    `;
+function openModal(idx){
+  const t=teams[idx];
+  document.getElementById('modal-header').innerHTML=`<img src="${t.logo}" alt="${t.teamName}" class="modal-logo" onerror="this.src='https://via.placeholder.com/70'"><div><div class="modal-title">${t.teamName}</div><div style="color:var(--muted);font-size:0.9rem;letter-spacing:1px;">Captain: ${t.captainName} · ${t.players.length} Players</div></div>`;
+  const container=document.getElementById('modal-players');
+  container.innerHTML='';
+  t.players.forEach(p=>{
+    const card=document.createElement('div');
+    card.className='player-card';
+    const s=playerStats[p.name]||{pts:0,three:0,ft:0,fouls:0};
+    card.innerHTML=`${p.captain?'<div class="captain-badge">Captain</div>':''}<img src="${p.image}" alt="${p.name}" class="player-photo" onerror="this.src='https://via.placeholder.com/150'"><div class="player-info"><div class="player-name">${p.name}</div><div style="font-size:0.75rem;color:var(--muted);margin-top:4px;">PTS: ${s.pts} · 3P: ${s.three} · FT: ${s.ft}</div></div>`;
     container.appendChild(card);
   });
   document.getElementById('modal-overlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
+  document.body.style.overflow='hidden';
 }
-function closeModal(e) { if (e.target === document.getElementById('modal-overlay')) closeModalBtn(); }
-function closeModalBtn() { document.getElementById('modal-overlay').classList.remove('open'); document.body.style.overflow = ''; }
+function closeModal(e){if(e.target===document.getElementById('modal-overlay'))closeModalBtn();}
+function closeModalBtn(){document.getElementById('modal-overlay').classList.remove('open');document.body.style.overflow='';}
 
-const ptsTbody = document.getElementById('points-table');
-const sortedPoints = [...pointsData].sort((a, b) => b.pts !== a.pts ? b.pts - a.pts : b.pd - a.pd);
-sortedPoints.forEach((r, idx) => {
-  const pos = idx + 1;
-  const badgeClass = pos===1?'pos-1':pos===2?'pos-2':pos===3?'pos-3':'pos-other';
-  const pdStr = r.pd===0 ? '0' : r.pd>0 ? `<span class="pd-pos">+${r.pd}</span>` : `<span class="pd-neg">${r.pd}</span>`;
-  const statusBadge = r.qualified
-    ? `<span style="margin-left:8px;font-size:0.65rem;background:rgba(0,230,118,0.15);color:var(--green);border:1px solid rgba(0,230,118,0.4);padding:2px 8px;border-radius:4px;letter-spacing:1px;font-family:'Barlow Condensed',sans-serif;font-weight:700;">✓ QUALIFIED</span>`
-    : r.eliminated
-    ? `<span style="margin-left:8px;font-size:0.65rem;background:rgba(255,61,87,0.12);color:var(--red);border:1px solid rgba(255,61,87,0.35);padding:2px 8px;border-radius:4px;letter-spacing:1px;font-family:'Barlow Condensed',sans-serif;font-weight:700;">✕ ELIMINATED</span>`
-    : '';
-  const rowStyle = r.qualified ? 'background:rgba(0,230,118,0.04);' : r.eliminated ? 'opacity:0.65;' : '';
-  ptsTbody.innerHTML += `<tr style="${rowStyle}"><td><span class="pos-badge ${badgeClass}">${pos}</span></td><td><img src="${r.logo}" class="team-row-logo" onerror="this.src='https://via.placeholder.com/30'"><strong>${r.name}</strong>${statusBadge}</td><td>${r.mp}</td><td>${r.w}</td><td>${r.l}</td><td>${pdStr}</td><td class="pts-val">${r.pts}</td></tr>`;
+const ptsTbody=document.getElementById('points-table');
+[...pointsData].sort((a,b)=>b.pts!==a.pts?b.pts-a.pts:b.pd-a.pd).forEach((r,idx)=>{
+  const pos=idx+1;
+  const bc=pos===1?'pos-1':pos===2?'pos-2':pos===3?'pos-3':'pos-other';
+  const pdStr=r.pd===0?'0':r.pd>0?`<span class="pd-pos">+${r.pd}</span>`:`<span class="pd-neg">${r.pd}</span>`;
+  const badge=r.champ?`<span style="margin-left:8px;font-size:0.65rem;background:rgba(0,230,118,0.15);color:var(--green);border:1px solid rgba(0,230,118,0.4);padding:2px 8px;border-radius:4px;letter-spacing:1px;font-family:'Barlow Condensed',sans-serif;font-weight:700;">🏆 CHAMPIONS</span>`:r.eliminated?`<span style="margin-left:8px;font-size:0.65rem;background:rgba(255,61,87,0.12);color:var(--red);border:1px solid rgba(255,61,87,0.35);padding:2px 8px;border-radius:4px;letter-spacing:1px;font-family:'Barlow Condensed',sans-serif;font-weight:700;">✕ ELIMINATED</span>`:'';
+  const rowStyle=r.champ?'background:rgba(0,230,118,0.05);':r.eliminated?'opacity:0.65;':'';
+  ptsTbody.innerHTML+=`<tr style="${rowStyle}"><td><span class="pos-badge ${bc}">${pos}</span></td><td><img src="${r.logo}" class="team-row-logo" onerror="this.src='https://via.placeholder.com/30'"><strong>${r.name}</strong>${badge}</td><td>${r.mp}</td><td>${r.w}</td><td>${r.l}</td><td>${pdStr}</td><td class="pts-val">${r.pts}</td></tr>`;
 });
 
-function buildStatTable(tbodyId, statKey) {
-  const tbody = document.getElementById(tbodyId);
-  const rows = Object.entries(playerStats).map(([name, s]) => ({name, team: nameToTeam[name] || '—', val: s[statKey] || 0}));
-  rows.sort((a, b) => b.val - a.val);
-  let rank = 1;
-  rows.forEach((r, i) => {
-    if (i > 0 && r.val !== rows[i-1].val) rank = i + 1;
-    const badgeClass = rank===1?'pos-1':rank===2?'pos-2':rank===3?'pos-3':'pos-other';
-    tbody.innerHTML += `<tr><td><span class="pos-badge ${badgeClass}">${rank}</span></td><td>${r.name}</td><td>${r.team}</td><td class="pts-val">${r.val}</td></tr>`;
+function buildStatTable(tbodyId,statKey){
+  const tbody=document.getElementById(tbodyId);
+  const rows=Object.entries(playerStats).map(([name,s])=>({name,team:nameToTeam[name]||'—',val:s[statKey]||0}));
+  rows.sort((a,b)=>b.val-a.val);
+  let rank=1;
+  rows.forEach((r,i)=>{
+    if(i>0&&r.val!==rows[i-1].val)rank=i+1;
+    const bc=rank===1?'pos-1':rank===2?'pos-2':rank===3?'pos-3':'pos-other';
+    const isMOTT=r.name==='Bipul Shahi'?'<span style="margin-left:6px;font-size:0.6rem;background:rgba(255,184,0,0.15);color:var(--gold);border:1px solid rgba(255,184,0,0.4);padding:1px 6px;border-radius:4px;font-family:\'Barlow Condensed\',sans-serif;font-weight:700;letter-spacing:1px;">🏅 MVP</span>':'';
+    tbody.innerHTML+=`<tr><td><span class="pos-badge ${bc}">${rank}</span></td><td>${r.name}${isMOTT}</td><td>${r.team}</td><td class="pts-val">${r.val}</td></tr>`;
   });
 }
 buildStatTable('stats-pts','pts');
@@ -863,26 +757,116 @@ buildStatTable('stats-3pt','three');
 buildStatTable('stats-ft','ft');
 buildStatTable('stats-fouls','fouls');
 
-function switchTab(el, panelId) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+function switchTab(el,panelId){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
   el.classList.add('active');
   document.getElementById(panelId).classList.add('active');
 }
-function openDrawer() { document.getElementById('drawer').classList.add('open'); document.getElementById('drawer-overlay').classList.add('open'); document.body.style.overflow='hidden'; }
-function closeDrawer() { document.getElementById('drawer').classList.remove('open'); document.getElementById('drawer-overlay').classList.remove('open'); document.body.style.overflow=''; }
+function openDrawer(){document.getElementById('drawer').classList.add('open');document.getElementById('drawer-overlay').classList.add('open');document.body.style.overflow='hidden';}
+function closeDrawer(){document.getElementById('drawer').classList.remove('open');document.getElementById('drawer-overlay').classList.remove('open');document.body.style.overflow='';}
 
-const sections = ['hero','matches','teams','points','stats','rules'];
-const navAs = document.querySelectorAll('.nav-links a');
-window.addEventListener('scroll', () => {
-  let cur = 'hero';
-  sections.forEach(id => { const el = document.getElementById(id); if (el && window.scrollY >= el.offsetTop - 100) cur = id; });
-  navAs.forEach(a => { a.classList.toggle('active', a.getAttribute('href') === '#' + cur); });
-}, {passive:true});
+const sections=['hero','matches','teams','points','stats','rules'];
+const navAs=document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll',()=>{
+  let cur='hero';
+  sections.forEach(id=>{const el=document.getElementById(id);if(el&&window.scrollY>=el.offsetTop-100)cur=id;});
+  navAs.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+},{passive:true});
 
-const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, {threshold:0.1, rootMargin:'0px 0px -50px 0px'});
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-document.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDelay = (i % 4) * 0.1 + 's'; });
+const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.reveal').forEach((el,i)=>{observer.observe(el);el.style.transitionDelay=(i%4)*0.1+'s';});
+
+// ── FIREWORKS ENGINE ──
+(function(){
+  const cv=document.getElementById('fw-canvas');
+  const cx=cv.getContext('2d');
+  let W,H;
+  function rsz(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;}
+  rsz();window.addEventListener('resize',rsz);
+  const COLS=['#FF5E0E','#FFB800','#00E676','#2979FF','#FF3D57','#ffffff','#FFD700','#FF69B4','#00BFFF','#9C27B0'];
+  function hx(h){return[parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)];}
+  const particles=[],rockets=[];
+  class Rocket{
+    constructor(){
+      this.x=W*(0.1+Math.random()*0.8);this.y=H;
+      this.tx=W*(0.05+Math.random()*0.9);this.ty=H*(0.08+Math.random()*0.42);
+      const spd=11+Math.random()*7,ang=Math.atan2(this.ty-this.y,this.tx-this.x);
+      this.vx=Math.cos(ang)*spd;this.vy=Math.sin(ang)*spd;
+      this.col=COLS[Math.floor(Math.random()*COLS.length)];
+      this.trail=[];this.done=false;
+    }
+    tick(){
+      this.trail.push({x:this.x,y:this.y});
+      if(this.trail.length>14)this.trail.shift();
+      this.x+=this.vx;this.y+=this.vy;
+      if(Math.hypot(this.tx-this.x,this.ty-this.y)<18){this.burst();this.done=true;}
+    }
+    burst(){
+      const n=70+Math.floor(Math.random()*80);
+      for(let i=0;i<n;i++){
+        const a=(Math.PI*2/n)*i+Math.random()*0.3,sp=2+Math.random()*7;
+        particles.push({x:this.x,y:this.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-0.5,
+          life:1,dec:0.011+Math.random()*0.017,sz:1.5+Math.random()*3.5,
+          col:Math.random()>0.25?this.col:COLS[Math.floor(Math.random()*COLS.length)],g:0.07});
+      }
+      // sparkles
+      for(let i=0;i<25;i++){
+        const a=Math.random()*Math.PI*2,sp=1+Math.random()*4;
+        particles.push({x:this.x,y:this.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,
+          life:1,dec:0.018+Math.random()*0.022,sz:1+Math.random()*2,col:'#fff',g:0.03,star:true});
+      }
+      // ring burst
+      for(let i=0;i<40;i++){
+        const a=(Math.PI*2/40)*i,sp=8+Math.random()*3;
+        particles.push({x:this.x,y:this.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,
+          life:1,dec:0.03+Math.random()*0.02,sz:2,col:this.col,g:0.04});
+      }
+    }
+    draw(){
+      this.trail.forEach((pt,i)=>{
+        const al=i/this.trail.length*0.7;
+        cx.globalAlpha=al;cx.beginPath();cx.arc(pt.x,pt.y,2,0,Math.PI*2);
+        cx.fillStyle=this.col;cx.fill();
+      });
+      cx.globalAlpha=1;cx.beginPath();cx.arc(this.x,this.y,3.5,0,Math.PI*2);cx.fillStyle='#fff';cx.fill();
+    }
+  }
+  let lastR=0,burst=0;
+  function loop(){
+    requestAnimationFrame(loop);
+    cx.fillStyle='rgba(5,8,16,0.16)';cx.fillRect(0,0,W,H);
+    const now=Date.now(),gap=burst<20?350:700+Math.random()*800;
+    if(now-lastR>gap){
+      rockets.push(new Rocket());
+      if(Math.random()>0.55)rockets.push(new Rocket());
+      if(burst<8&&Math.random()>0.7)rockets.push(new Rocket());
+      lastR=now;burst++;
+    }
+    for(let i=rockets.length-1;i>=0;i--){
+      rockets[i].tick();if(rockets[i].done)rockets.splice(i,1);else rockets[i].draw();
+    }
+    for(let i=particles.length-1;i>=0;i--){
+      const p=particles[i];p.x+=p.vx;p.y+=p.vy;p.vy+=p.g;p.vx*=0.98;p.life-=p.dec;
+      if(p.life<=0){particles.splice(i,1);continue;}
+      cx.globalAlpha=p.life;
+      if(p.star){cx.fillStyle=p.col;cx.fillRect(p.x-p.sz/2,p.y-p.sz/2,p.sz,p.sz);}
+      else{const [r,g,b]=p.col.startsWith('#')?hx(p.col):[255,255,255];cx.beginPath();cx.arc(p.x,p.y,p.sz*p.life,0,Math.PI*2);cx.fillStyle=`rgba(${r},${g},${b},${p.life})`;cx.fill();}
+    }
+    cx.globalAlpha=1;
+  }
+  loop();
+
+  // CSS confetti
+  const CC=['#FF5E0E','#FFB800','#00E676','#FF3D57','#2979FF','#FFD700','#FF69B4','#9C27B0'];
+  for(let i=0;i<70;i++){
+    const el=document.createElement('div');
+    el.className='cf';
+    const sz=3+Math.random()*9;
+    el.style.cssText=`left:${Math.random()*100}vw;width:${sz}px;height:${sz}px;background:${CC[Math.floor(Math.random()*CC.length)]};border-radius:${Math.random()>0.4?'50%':'2px'};animation-duration:${3+Math.random()*6}s;animation-delay:${-Math.random()*8}s;opacity:${0.5+Math.random()*0.5};`;
+    document.body.appendChild(el);
+  }
+})();
 </script>
 </body>
 </html>
